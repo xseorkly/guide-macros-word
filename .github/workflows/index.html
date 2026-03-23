@@ -1,1 +1,3391 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Macros Word — Guide du Gestionnaire</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0D0F14; --surface:#14171F; --surface2:#1C2030; --surface3:#222639;
+  --border:rgba(255,255,255,0.07); --border-hover:rgba(255,255,255,0.15);
+  --text:#E8EAF0; --text-muted:#7A8099; --text-dim:#4A5068;
+  --accent:#2B6CB0; --accent-bg:rgba(43,108,176,0.12);
+  --c1:#4299E1; --c1-bg:rgba(66,153,225,0.1); --c1-border:rgba(66,153,225,0.25);
+  --c2:#48BB78; --c2-bg:rgba(72,187,120,0.1); --c2-border:rgba(72,187,120,0.25);
+  --c3:#F6AD55; --c3-bg:rgba(246,173,85,0.1); --c3-border:rgba(246,173,85,0.25);
+  --c4:#B794F4; --c4-bg:rgba(183,148,244,0.1); --c4-border:rgba(183,148,244,0.25);
+  --c5:#4FD1C5; --c5-bg:rgba(79,209,197,0.1); --c5-border:rgba(79,209,197,0.25);
+  --c6:#FC8181; --c6-bg:rgba(252,129,129,0.1); --c6-border:rgba(252,129,129,0.25);
+  --c7:#F6AD55; --c7-bg:rgba(246,173,85,0.1); --c7-border:rgba(246,173,85,0.25);
+  --red:#FC8181; --red-bg:rgba(252,129,129,0.1); --red-border:rgba(252,129,129,0.25);
+  --green:#48BB78; --green-bg:rgba(72,187,120,0.1);
+  --yellow:#F6AD55; --yellow-bg:rgba(246,173,85,0.1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0;mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,black 30%,transparent 100%)}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+nav{position:sticky;top:0;z-index:100;background:rgba(13,15,20,0.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:10px 0}
+.nav-inner{max-width:1100px;margin:0 auto;padding:0 24px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.nav-brand{font-family:'Syne',sans-serif;font-weight:800;font-size:14px;color:var(--text);margin-right:10px}
+.nav-link{padding:6px 14px;border-radius:8px;font-size:13px;color:var(--text-muted);cursor:pointer;border:none;background:none;font-family:'DM Sans',sans-serif;transition:all .2s;text-decoration:none}
+.nav-link:hover{background:var(--surface2);color:var(--text)}
+.nav-activites{background:var(--c3-bg) !important;border:1px solid var(--c3-border);color:var(--c3) !important;font-weight:500;margin-left:auto;border-radius:8px}
+header{padding:80px 0 56px;text-align:center}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--c1-bg);border:1px solid var(--c1-border);border-radius:99px;padding:5px 14px;font-size:12px;font-weight:500;color:var(--c1);letter-spacing:.04em;text-transform:uppercase;margin-bottom:28px;animation:fadeUp .6s ease both}
+.hero-badge::before{content:'';width:6px;height:6px;background:var(--c1);border-radius:50%;animation:pulse 2s infinite}
+h1{font-family:'Syne',sans-serif;font-size:clamp(34px,6vw,68px);font-weight:800;line-height:1.05;letter-spacing:-.03em;animation:fadeUp .7s .1s ease both}
+h1 span{background:linear-gradient(135deg,var(--c1) 0%,var(--c5) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{margin:20px auto 0;font-size:17px;color:var(--text-muted);font-weight:300;max-width:540px;animation:fadeUp .7s .2s ease both}
+.hero-stats{display:flex;justify-content:center;gap:40px;margin-top:44px;animation:fadeUp .7s .3s ease both}
+.stat{text-align:center}
+.stat-num{font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:var(--text);line-height:1}
+.stat-label{font-size:11px;color:var(--text-dim);margin-top:4px;letter-spacing:.06em;text-transform:uppercase}
+.search-wrap{max-width:460px;margin:44px auto 0;position:relative;animation:fadeUp .7s .35s ease both}
+.search-wrap input{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:13px 44px 13px 18px;font-family:'DM Sans',sans-serif;font-size:15px;color:var(--text);outline:none;transition:border-color .2s,box-shadow .2s}
+.search-wrap input::placeholder{color:var(--text-dim)}
+.search-wrap input:focus{border-color:var(--c1-border);box-shadow:0 0 0 3px var(--c1-bg)}
+.search-icon{position:absolute;right:16px;top:50%;transform:translateY(-50%);color:var(--text-dim);font-size:16px}
+.filters{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;margin:26px 0 48px;animation:fadeUp .7s .4s ease both}
+.filter-btn{padding:6px 14px;border-radius:99px;border:1px solid var(--border);background:transparent;color:var(--text-muted);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all .2s}
+.filter-btn:hover{border-color:var(--border-hover);color:var(--text)}
+.filter-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.section-label{font-family:'Syne',sans-serif;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.guide-section{margin-bottom:56px;animation:fadeUp .5s ease both}
+.guide-tabs{display:flex;gap:2px;border-bottom:1px solid var(--border)}
+.gtab{padding:12px 20px;font-size:14px;color:var(--text-muted);cursor:pointer;border:none;background:none;font-family:'DM Sans',sans-serif;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .2s}
+.gtab:hover{color:var(--text)}
+.gtab.active{color:var(--c1);border-bottom-color:var(--c1)}
+.gtab-panel{display:none;background:var(--surface);border:1px solid var(--border);border-top:none;border-radius:0 0 16px 16px;padding:30px}
+.gtab-panel.active{display:block}
+.step-list{display:flex;flex-direction:column;gap:14px}
+.step-item{display:grid;grid-template-columns:40px 1fr;gap:14px;align-items:start}
+.step-num{width:40px;height:40px;border-radius:10px;background:var(--c1-bg);border:1px solid var(--c1-border);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:var(--c1);flex-shrink:0}
+.step-content h4{font-size:14px;font-weight:500;color:var(--text);margin-bottom:3px}
+.step-content p{font-size:13px;color:var(--text-muted);line-height:1.65}
+.kbd{display:inline-block;background:var(--surface2);border:1px solid var(--border-hover);border-radius:5px;padding:1px 7px;font-size:12px;color:var(--text);font-family:monospace}
+.param-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:640px){.param-grid{grid-template-columns:1fr}}
+.param-card{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:16px}
+.param-card h4{font-size:13px;font-weight:500;color:var(--text);margin-bottom:7px}
+.param-card p{font-size:13px;color:var(--text-muted);line-height:1.65}
+.err-list{display:flex;flex-direction:column;gap:10px}
+.err-item{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:16px 18px;display:grid;grid-template-columns:36px 1fr;gap:12px;align-items:start}
+.err-icon{width:36px;height:36px;border-radius:8px;background:var(--red-bg);border:1px solid var(--red-border);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.err-icon.warn{background:var(--yellow-bg);border-color:rgba(246,173,85,0.3)}
+.err-icon.ok{background:var(--green-bg);border-color:rgba(72,187,120,0.3)}
+.err-content h4{font-size:13px;font-weight:500;color:var(--text);margin-bottom:3px}
+.err-content p{font-size:13px;color:var(--text-muted);line-height:1.65}
+.err-content .fix{font-size:12px;color:var(--green);margin-top:5px}
+.err-content .fix::before{content:'✓ ';font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;margin-bottom:20px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px;position:relative;overflow:hidden;animation:fadeUp .5s ease both;transition:border-color .2s,transform .2s,background .2s}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--card-color,var(--accent));opacity:0;transition:opacity .2s}
+.card:hover{border-color:var(--border-hover);transform:translateY(-3px);background:var(--surface2)}
+.card:hover::before{opacity:1}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;gap:10px}
+.card-icon{width:38px;height:38px;border-radius:10px;background:var(--card-bg,var(--c1-bg));border:1px solid var(--card-border,var(--c1-border));display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.card-tag{font-size:11px;font-weight:500;padding:3px 10px;border-radius:99px;background:var(--card-bg,var(--c1-bg));color:var(--card-color,var(--c1));border:1px solid var(--card-border,var(--c1-border));letter-spacing:.04em}
+.card h3{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--text);margin-bottom:3px}
+.card-desc{font-size:13px;color:var(--text-muted);margin-bottom:14px;font-weight:300}
+.card ul{list-style:none}
+.card ul li{font-size:13px;color:var(--text-muted);padding:5px 0;border-bottom:1px solid var(--border);display:flex;align-items:baseline;gap:8px;cursor:pointer;transition:color .15s}
+.card ul li:last-child{border-bottom:none}
+.card ul li:hover{color:var(--card-color,var(--accent))}
+.card ul li::before{content:'→';color:var(--card-color,var(--accent));font-size:11px;flex-shrink:0}
+.card-count{font-size:11px;color:var(--text-dim);margin-top:12px}
+.tips-banner{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px 28px;margin:44px 0 20px;display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center}
+.tips-icon{font-size:28px}
+.tips-banner h4{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:5px;color:var(--text)}
+.tips-banner p{font-size:13px;color:var(--text-muted);font-weight:300;line-height:1.7}
+.tips-banner strong{color:var(--c1);font-weight:500}
+.no-results{text-align:center;padding:60px 20px;color:var(--text-dim);display:none}
+footer{margin-top:72px;padding:36px 0;border-top:1px solid var(--border);text-align:center}
+footer p{font-size:13px;color:var(--text-dim)}
+footer strong{color:var(--accent);font-weight:500}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.78);z-index:1000;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
+.modal-overlay.open{display:flex}
+.modal{background:var(--surface);border:1px solid var(--border-hover);border-radius:20px;width:100%;max-width:680px;max-height:90vh;overflow-y:auto;animation:modalIn .25s ease}
+.modal-header{padding:22px 26px 0;display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+.modal-header h3{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;color:var(--text);line-height:1.3}
+.modal-close{width:32px;height:32px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);color:var(--text-muted);font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
+.modal-close:hover{background:var(--surface3);color:var(--text)}
+.modal-body{padding:18px 26px 26px}
+.modal-desc{font-size:14px;color:var(--text-muted);margin-bottom:18px;line-height:1.7}
+.modal-label{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px}
+.code-block{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:18px;overflow-x:auto;position:relative}
+.code-block pre{font-family:'Courier New',monospace;font-size:12.5px;line-height:1.8;color:#C5C8D4;margin:0;white-space:pre}
+.copy-btn{position:absolute;top:10px;right:10px;background:var(--surface2);border:1px solid var(--border-hover);border-radius:6px;padding:4px 11px;font-size:12px;color:var(--text-muted);cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
+.copy-btn:hover{background:var(--surface3);color:var(--text)}
+.copy-btn.copied{background:var(--green-bg);border-color:rgba(72,187,120,.3);color:var(--green)}
+.modal-tip{background:var(--c1-bg);border:1px solid var(--c1-border);border-radius:10px;padding:13px 15px;margin-top:14px;font-size:13px;color:var(--text-muted);line-height:1.65}
+.modal-tip strong{color:var(--c1);font-weight:500}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes modalIn{from{opacity:0;transform:scale(.96) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--surface2);border-radius:99px}
+</style>
+</head>
+<body>
 
+<nav>
+  <div class="nav-inner">
+    <span class="nav-brand">📘 Macros Word</span>
+    <button class="nav-link" onclick="scrollSec('guide')">📥 Guide démarrage</button>
+    <button class="nav-link" onclick="scrollSec('metier')">💼 Cas métier</button>
+    <button class="nav-link" onclick="scrollSec('transversal')">🔀 Transversal</button>
+  </div>
+</nav>
+
+<div class="wrap">
+<header>
+  <div class="hero-badge">Guide complet</div>
+  <h1>Macros Word<br><span>pour le Gestionnaire</span></h1>
+  <p class="hero-sub">De l'installation à la mise en production — 55 exemples VBA Word prêts à l'emploi</p>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">3</div><div class="stat-label">Guides pratiques</div></div>
+    <div class="stat"><div class="stat-num">11</div><div class="stat-label">Domaines métier</div></div>
+    <div class="stat"><div class="stat-num">55</div><div class="stat-label">Exemples VBA</div></div>
+  </div>
+  <div class="search-wrap">
+    <input type="text" id="searchInput" placeholder="Rechercher un cas d'usage…" oninput="filterCards()">
+    <span class="search-icon">⌕</span>
+  </div>
+</header>
+
+<div class="filters">
+  <button class="filter-btn active" onclick="setFilter('all',this)">Tous</button>
+  <button class="filter-btn" onclick="setFilter('redaction',this)">Rédaction</button>
+  <button class="filter-btn" onclick="setFilter('mise-en-forme',this)">Mise en forme</button>
+  <button class="filter-btn" onclick="setFilter('publipostage',this)">Publipostage</button>
+  <button class="filter-btn" onclick="setFilter('tableaux',this)">Tableaux</button>
+  <button class="filter-btn" onclick="setFilter('revisions',this)">Révisions</button>
+  <button class="filter-btn" onclick="setFilter('automatisation',this)">Automatisation</button>
+  <button class="filter-btn" onclick="setFilter('transversal',this)">Transversal</button>
+</div>
+
+<!-- GUIDE -->
+<div id="guide"></div>
+<div class="section-label" style="margin-bottom:0">Guide de démarrage</div>
+<div class="guide-section">
+  <div class="guide-tabs">
+    <button class="gtab active" onclick="switchTab(0)">📥 Insérer une macro</button>
+    <button class="gtab" onclick="switchTab(1)">⚙️ Paramétrer Word</button>
+    <button class="gtab" onclick="switchTab(2)">⚠️ Erreurs à éviter</button>
+  </div>
+
+  <div class="gtab-panel active">
+    <div class="step-list">
+      <div class="step-item"><div class="step-num">1</div><div class="step-content"><h4>Ouvrir l'éditeur VBA</h4><p>Appuyez sur <span class="kbd">Alt</span> + <span class="kbd">F11</span> dans Word. L'éditeur Visual Basic s'ouvre dans une fenêtre séparée.</p></div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-content"><h4>Créer un module</h4><p>Dans le menu de l'éditeur, cliquez sur <strong>Insertion → Module</strong>. Un module vide apparaît sous le document ou le Normal.dotm dans l'explorateur de projet.</p></div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-content"><h4>Coller le code VBA</h4><p>Cliquez dans la zone blanche du module et collez le code. Chaque macro commence par <span class="kbd">Sub NomMacro()</span> et se termine par <span class="kbd">End Sub</span>.</p></div></div>
+      <div class="step-item"><div class="step-num">4</div><div class="step-content"><h4>Tester la macro</h4><p>Cliquez à l'intérieur du code, puis appuyez sur <span class="kbd">F5</span> pour exécuter. Utilisez <span class="kbd">F8</span> pour exécuter ligne par ligne (débogage pas à pas).</p></div></div>
+      <div class="step-item"><div class="step-num">5</div><div class="step-content"><h4>Enregistrer dans Normal.dotm</h4><p>Pour qu'une macro soit disponible dans <strong>tous vos documents</strong>, placez-la dans le projet <strong>Normal (Normal.dotm)</strong> plutôt que dans le document en cours.</p></div></div>
+      <div class="step-item"><div class="step-num">6</div><div class="step-content"><h4>Associer à un bouton ou raccourci</h4><p>Onglet <strong>Développeur → Macros → sélectionner la macro → Options</strong> pour lui assigner un raccourci clavier. Ou : Fichier → Options → Barre d'outils Accès rapide.</p></div></div>
+    </div>
+  </div>
+
+  <div class="gtab-panel">
+    <div class="param-grid">
+      <div class="param-card"><h4>🔧 Activer l'onglet Développeur</h4><p>Fichier → Options → Personnaliser le ruban → cocher <strong>Développeur</strong>. Donne accès à l'éditeur VBA, aux macros et aux contrôles de contenu.</p></div>
+      <div class="param-card"><h4>🔐 Niveau de sécurité des macros</h4><p>Développeur → Sécurité des macros → <strong>"Désactiver toutes les macros avec notification"</strong>. Word demandera confirmation à chaque ouverture d'un fichier avec macros.</p></div>
+      <div class="param-card"><h4>📂 Emplacement approuvé</h4><p>Fichier → Options → Centre de gestion de la confidentialité → Emplacements approuvés. Les fichiers de ce dossier s'ouvrent avec macros activées automatiquement.</p></div>
+      <div class="param-card"><h4>📚 Références VBA Word</h4><p>Dans l'éditeur VBA : Outils → Références. Pour Excel, cochez <strong>Microsoft Excel Object Library</strong>. Pour Outlook, <strong>Microsoft Outlook Object Library</strong>.</p></div>
+      <div class="param-card"><h4>💾 Normal.dotm — modèle global</h4><p>Les macros dans <strong>Normal.dotm</strong> sont disponibles dans tous vos documents. Celles dans un .docm sont limitées à ce fichier. Placez vos macros utilitaires dans Normal.dotm.</p></div>
+      <div class="param-card"><h4>📝 Format .docm obligatoire</h4><p>Pour conserver les macros dans un document, enregistrez en <strong>.docm</strong> (Document Word avec macros activées). Le format .docx supprime silencieusement tout le code VBA.</p></div>
+    </div>
+  </div>
+
+  <div class="gtab-panel">
+    <div class="err-list">
+      <div class="err-item"><div class="err-icon">⛔</div><div class="err-content"><h4>Oublier de sauvegarder en .docm</h4><p>Comme pour Excel, le format .docx ne supporte pas les macros. Tout votre code VBA sera perdu à la prochaine sauvegarde si vous ne choisissez pas .docm.</p><div class="fix">Toujours choisir "Document Word prenant en charge les macros (*.docm)" lors de l'enregistrement.</div></div></div>
+      <div class="err-item"><div class="err-icon warn">⚠️</div><div class="err-content"><h4>Utiliser Selection plutôt que Range</h4><p><code>Selection</code> dépend de ce que l'utilisateur a sélectionné manuellement. Si rien n'est sélectionné ou si la sélection change, la macro plante ou donne des résultats imprévisibles.</p><div class="fix">Toujours utiliser des objets <code>Range</code> définis par le code : <code>ActiveDocument.Range(Start:=0, End:=100)</code>.</div></div></div>
+      <div class="err-item"><div class="err-icon">⛔</div><div class="err-content"><h4>Ne pas gérer les erreurs</h4><p>Si un signet est absent, un fichier introuvable ou un style inexistant, la macro plante sans message clair. En Word, les signets manquants sont la cause d'erreur n°1.</p><div class="fix">Toujours vérifier l'existence avant d'utiliser : <code>If ActiveDocument.Bookmarks.Exists("MonSignet") Then</code>.</div></div></div>
+      <div class="err-item"><div class="err-icon warn">⚠️</div><div class="err-content"><h4>Modifier le document sans sauvegarder l'original</h4><p>Une macro qui remplace, supprime ou reformate du contenu est irréversible. Ctrl+Z peut fonctionner partiellement mais pas toujours sur les modifications VBA complexes.</p><div class="fix">Créer une copie avant exécution : <code>ActiveDocument.SaveAs2 chemin & "_backup.docx"</code> ou demander confirmation avec MsgBox.</div></div></div>
+      <div class="err-item"><div class="err-icon">⛔</div><div class="err-content"><h4>Ne pas désactiver le suivi des modifications</h4><p>Si le suivi des modifications est actif, chaque action VBA génère une révision dans le document. La macro peut fonctionner mais le document devient illisible avec des milliers de marques.</p><div class="fix">Ajouter en début de macro : <code>ActiveDocument.TrackRevisions = False</code> et le réactiver à la fin si nécessaire.</div></div></div>
+      <div class="err-item"><div class="err-icon warn">⚠️</div><div class="err-content"><h4>Utiliser des noms de styles codés en dur</h4><p>Les styles Word ont des noms différents selon la langue de Word ("Titre 1" en français, "Heading 1" en anglais). Une macro qui fonctionne sur votre poste peut échouer chez un collègue.</p><div class="fix">Utiliser les ID de style intégrés : <code>wdStyleHeading1</code> au lieu de <code>"Heading 1"</code> pour les styles standards.</div></div></div>
+      <div class="err-item"><div class="err-icon ok">ℹ️</div><div class="err-content"><h4>Négliger la boucle Find/Replace</h4><p>La méthode <code>Find</code> de Word nécessite toujours un <code>.ClearFormatting</code> avant chaque utilisation. Sans cela, les critères de recherche précédents s'accumulent et donnent des résultats inattendus.</p><div class="fix">Toujours appeler <code>.Find.ClearFormatting</code> et <code>.Replacement.ClearFormatting</code> avant chaque opération de recherche.</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- MÉTIER -->
+<div id="metier"></div>
+<div class="section-label">Domaines métier</div>
+<div class="grid" id="cardsGrid">
+
+  <div class="card" data-cat="redaction" style="--card-color:#4299E1;--card-bg:rgba(66,153,225,0.1);--card-border:rgba(66,153,225,0.25)">
+    <div class="card-top"><div class="card-icon">✍️</div><span class="card-tag">Rédaction</span></div>
+    <h3>Rédaction & génération de contenu</h3>
+    <p class="card-desc">Automatisation de la création et structuration de documents</p>
+    <ul>
+      <li onclick="openModal('red1')">Générer un rapport structuré depuis un modèle</li>
+      <li onclick="openModal('red2')">Insérer automatiquement la date, l'auteur et le titre</li>
+      <li onclick="openModal('red3')">Créer un sommaire automatique mis à jour</li>
+      <li onclick="openModal('red4')">Numéroter les titres et sous-titres automatiquement</li>
+      <li onclick="openModal('red5')">Générer un document depuis des données Excel</li>
+    </ul>
+    <div class="card-count">📎 Cliquez sur un cas pour voir l'exemple VBA</div>
+  </div>
+
+  <div class="card" data-cat="mise-en-forme" style="--card-color:#48BB78;--card-bg:rgba(72,187,120,0.1);--card-border:rgba(72,187,120,0.25)">
+    <div class="card-top"><div class="card-icon">🎨</div><span class="card-tag">Mise en forme</span></div>
+    <h3>Mise en forme & styles</h3>
+    <p class="card-desc">Application automatique de chartes graphiques et styles</p>
+    <ul>
+      <li onclick="openModal('mef1')">Appliquer la charte graphique d'entreprise en un clic</li>
+      <li onclick="openModal('mef2')">Remplacer tous les styles d'un document</li>
+      <li onclick="openModal('mef3')">Harmoniser les polices et tailles dans tout le document</li>
+      <li onclick="openModal('mef4')">Surligner les mots-clés importants automatiquement</li>
+      <li onclick="openModal('mef5')">Formater les titres, sous-titres et corps de texte</li>
+    </ul>
+    <div class="card-count">📎 Cliquez sur un cas pour voir l'exemple VBA</div>
+  </div>
+
+  <div class="card" data-cat="publipostage" style="--card-color:#F6AD55;--card-bg:rgba(246,173,85,0.1);--card-border:rgba(246,173,85,0.25)">
+    <div class="card-top"><div class="card-icon">📨</div><span class="card-tag">Publipostage</span></div>
+    <h3>Publipostage & personnalisation</h3>
+    <p class="card-desc">Génération en masse de documents personnalisés</p>
+    <ul>
+      <li onclick="openModal('pub1')">Créer des lettres personnalisées depuis une liste Excel</li>
+      <li onclick="openModal('pub2')">Générer des contrats individuels avec données variables</li>
+      <li onclick="openModal('pub3')">Remplir automatiquement les signets d'un modèle</li>
+      <li onclick="openModal('pub4')">Exporter chaque document personnalisé en PDF séparé</li>
+      <li onclick="openModal('pub5')">Envoyer chaque document par e-mail via Outlook</li>
+    </ul>
+    <div class="card-count">📎 Cliquez sur un cas pour voir l'exemple VBA</div>
+  </div>
+
+  <div class="card" data-cat="tableaux" style="--card-color:#B794F4;--card-bg:rgba(183,148,244,0.1);--card-border:rgba(183,148,244,0.25)">
+    <div class="card-top"><div class="card-icon">📋</div><span class="card-tag">Tableaux</span></div>
+    <h3>Tableaux & données</h3>
+    <p class="card-desc">Manipulation automatique des tableaux dans Word</p>
+    <ul>
+      <li onclick="openModal('tab1')">Créer un tableau formaté depuis des données Excel</li>
+      <li onclick="openModal('tab2')">Trier les lignes d'un tableau Word automatiquement</li>
+      <li onclick="openModal('tab3')">Calculer et insérer des totaux dans un tableau</li>
+      <li onclick="openModal('tab4')">Supprimer les lignes vides dans tous les tableaux</li>
+      <li onclick="openModal('tab5')">Mettre en forme conditionnellement les cellules d'un tableau</li>
+    </ul>
+    <div class="card-count">📎 Cliquez sur un cas pour voir l'exemple VBA</div>
+  </div>
+
+  <div class="card" data-cat="revisions" style="--card-color:#4FD1C5;--card-bg:rgba(79,209,197,0.1);--card-border:rgba(79,209,197,0.25)">
+    <div class="card-top"><div class="card-icon">🔍</div><span class="card-tag">Révisions</span></div>
+    <h3>Révisions & contrôle qualité</h3>
+    <p class="card-desc">Vérification, nettoyage et validation des documents</p>
+    <ul>
+      <li onclick="openModal('rev1')">Accepter ou rejeter toutes les révisions en masse</li>
+      <li onclick="openModal('rev2')">Rechercher et remplacer du texte en masse</li>
+      <li onclick="openModal('rev3')">Supprimer les commentaires et annotations</li>
+      <li onclick="openModal('rev4')">Vérifier la présence de mentions obligatoires</li>
+      <li onclick="openModal('rev5')">Comparer deux versions d'un document automatiquement</li>
+    </ul>
+    <div class="card-count">📎 Cliquez sur un cas pour voir l'exemple VBA</div>
+  </div>
+
+  <div class="card" data-cat="automatisation" style="--card-color:#FC8181;--card-bg:rgba(252,129,129,0.1);--card-border:rgba(252,129,129,0.25)">
+    <div class="card-top"><div class="card-icon">⚙️</div><span class="card-tag">Automatisation</span></div>
+    <h3>Automatisation & workflows</h3>
+    <p class="card-desc">Enchaînement de tâches et traitements par lots</p>
+    <ul>
+      <li onclick="openModal('aut1')">Traiter en batch tous les .docx d'un dossier</li>
+      <li onclick="openModal('aut2')">Convertir des documents Word en PDF en masse</li>
+      <li onclick="openModal('aut3')">Fusionner plusieurs documents Word en un seul</li>
+      <li onclick="openModal('aut4')">Extraire le texte de tous les documents d'un dossier</li>
+      <li onclick="openModal('aut5')">Protéger ou déprotéger des documents par mot de passe</li>
+    </ul>
+    <div class="card-count">📎 Cliquez sur un cas pour voir l'exemple VBA</div>
+  </div>
+
+</div>
+
+<!-- TRANSVERSAL -->
+<div id="transversal"></div>
+<div class="section-label" style="margin-top:44px">Cas transversaux</div>
+<div class="grid">
+
+  <div class="card" data-cat="transversal" style="--card-color:#F6AD55;--card-bg:rgba(246,173,85,0.1);--card-border:rgba(246,173,85,0.25)">
+    <div class="card-top"><div class="card-icon">🖱️</div><span class="card-tag">Transversal</span></div>
+    <h3>Interface & ergonomie</h3>
+    <p class="card-desc">Boutons, formulaires et raccourcis pour rendre Word plus efficace</p>
+    <ul>
+      <li onclick="openModal('ui1')">Créer un bouton personnalisé dans la barre d'outils</li>
+      <li onclick="openModal('ui2')">Concevoir un formulaire de saisie guidé (UserForm)</li>
+      <li onclick="openModal('ui3')">Définir des raccourcis clavier pour vos macros</li>
+      <li onclick="openModal('ui4')">Afficher une barre de progression pendant le traitement</li>
+      <li onclick="openModal('ui5')">Créer un menu personnalisé dans le ruban Word</li>
+    </ul>
+    <div class="card-count">📎 Cliquez sur un cas pour voir l'exemple VBA</div>
+  </div>
+
+  <div class="card" data-cat="transversal" style="--card-color:#4299E1;--card-bg:rgba(66,153,225,0.1);--card-border:rgba(66,153,225,0.25)">
+    <div class="card-top"><div class="card-icon">📁</div><span class="card-tag">Transversal</span></div>
+    <h3>Gestion multi-documents</h3>
+    <p class="card-desc">Travailler sur plusieurs fichiers Word simultanément</p>
+    <ul>
+      <li onclick="openModal('mf1')">Ouvrir, modifier et fermer des documents en lot</li>
+      <li onclick="openModal('mf2')">Rechercher/remplacer dans tous les documents d'un dossier</li>
+      <li onclick="openModal('mf3')">Renommer des fichiers Word selon des règles définies</li>
+      <li onclick="openModal('mf4')">Extraire des métadonnées de plusieurs documents</li>
+      <li onclick="openModal('mf5')">Générer un rapport de synthèse sur un ensemble de documents</li>
+    </ul>
+    <div class="card-count">📎 Cliquez sur un cas pour voir l'exemple VBA</div>
+  </div>
+
+  <div class="card" data-cat="transversal" style="--card-color:#48BB78;--card-bg:rgba(72,187,120,0.1);--card-border:rgba(72,187,120,0.25)">
+    <div class="card-top"><div class="card-icon">🔗</div><span class="card-tag">Transversal</span></div>
+    <h3>Interopérabilité Office</h3>
+    <p class="card-desc">Connecter Word à Excel, Outlook et PowerPoint</p>
+    <ul>
+      <li onclick="openModal('off1')">Importer un tableau Excel dans Word automatiquement</li>
+      <li onclick="openModal('off2')">Envoyer un document Word par e-mail via Outlook</li>
+      <li onclick="openModal('off3')">Créer des diapositives PowerPoint depuis Word</li>
+      <li onclick="openModal('off4')">Lire des données Excel pour remplir un document Word</li>
+      <li onclick="openModal('off5')">Synchroniser les styles entre plusieurs documents</li>
+    </ul>
+    <div class="card-count">📎 Cliquez sur un cas pour voir l'exemple VBA</div>
+  </div>
+
+  <div class="card" data-cat="transversal" style="--card-color:#B794F4;--card-bg:rgba(183,148,244,0.1);--card-border:rgba(183,148,244,0.25)">
+    <div class="card-top"><div class="card-icon">📌</div><span class="card-tag">Transversal</span></div>
+    <h3>Signets, champs & propriétés</h3>
+    <p class="card-desc">Manipulation avancée des éléments dynamiques du document</p>
+    <ul>
+      <li onclick="openModal('sig1')">Insérer et remplir des signets automatiquement</li>
+      <li onclick="openModal('sig2')">Mettre à jour tous les champs du document</li>
+      <li onclick="openModal('sig3')">Lire et écrire les propriétés personnalisées du document</li>
+      <li onclick="openModal('sig4')">Créer des renvois automatiques entre sections</li>
+      <li onclick="openModal('sig5')">Insérer des variables de document dans le texte</li>
+    </ul>
+    <div class="card-count">📎 Cliquez sur un cas pour voir l'exemple VBA</div>
+  </div>
+
+  <div class="card" data-cat="transversal" style="--card-color:#FC8181;--card-bg:rgba(252,129,129,0.1);--card-border:rgba(252,129,129,0.25)">
+    <div class="card-top"><div class="card-icon">🔒</div><span class="card-tag">Transversal</span></div>
+    <h3>Sécurité & conformité</h3>
+    <p class="card-desc">Protéger les documents et assurer la conformité des contenus</p>
+    <ul>
+      <li onclick="openModal('sec1')">Protéger un document en lecture seule ou par zone</li>
+      <li onclick="openModal('sec2')">Supprimer les métadonnées et informations personnelles</li>
+      <li onclick="openModal('sec3')">Vérifier la présence de clauses obligatoires</li>
+      <li onclick="openModal('sec4')">Journaliser les modifications avec horodatage</li>
+      <li onclick="openModal('sec5')">Créer une sauvegarde horodatée automatique</li>
+    </ul>
+    <div class="card-count">📎 Cliquez sur un cas pour voir l'exemple VBA</div>
+  </div>
+
+</div>
+
+<div class="tips-banner">
+  <div class="tips-icon">💡</div>
+  <div>
+    <h4>Conseil de pro</h4>
+    <p>Commencez par <strong>enregistrer une macro</strong> (Développeur → Enregistrer une macro) pour voir le code VBA généré automatiquement. En Word, le modèle objet tourne autour de <strong>Application → Document → Range/Selection → Paragraph/Table/Run</strong>. Maîtriser ces 4 niveaux permet de gérer 90% des cas d'usage.</p>
+  </div>
+</div>
+
+<div class="no-results" id="noResults">
+  <div style="font-size:40px;margin-bottom:12px">🔍</div>
+  <p>Aucun résultat pour cette recherche.</p>
+</div>
+
+<footer>
+  <p>Guide des macros Word — <strong>55 exemples VBA</strong> pour gestionnaires · Cliquez sur n'importe quel cas d'usage pour voir le code</p>
+</footer>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeOut(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modalTitle"></h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <p class="modal-desc" id="modalDesc"></p>
+      <div class="modal-label">Exemple de macro VBA</div>
+      <div class="code-block">
+        <button class="copy-btn" id="copyBtn" onclick="copyCode()">Copier</button>
+        <pre id="modalCode"></pre>
+      </div>
+      <div class="modal-tip" id="modalTip"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function switchTab(i){document.querySelectorAll('.gtab').forEach((t,j)=>t.classList.toggle('active',i===j));document.querySelectorAll('.gtab-panel').forEach((p,j)=>p.classList.toggle('active',i===j))}
+function scrollSec(id){document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'})}
+let cf='all';
+function setFilter(cat,btn){cf=cat;document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');filterCards()}
+function filterCards(){const q=document.getElementById('searchInput').value.toLowerCase().trim();let n=0;document.querySelectorAll('.card').forEach(c=>{const mc=cf==='all'||c.dataset.cat===cf;const mq=q===''||c.innerText.toLowerCase().includes(q);c.style.display=(mc&&mq)?'block':'none';if(mc&&mq)n++});document.getElementById('noResults').style.display=n===0?'block':'none'}
+
+const M = {
+// ── RÉDACTION ──
+red1:{t:"Générer un rapport structuré depuis un modèle",d:"Duplique un document modèle (.dotx), l'ouvre et remplace les balises de contenu par des valeurs saisies par l'utilisateur.",c:`Sub GenererRapportDepuisModele()
+    Dim cheminModele As String
+    Dim cheminSortie As String
+    Dim wdApp As Application
+    Dim doc As Document
+    Dim titre As String, auteur As String, periode As String
+    
+    ' Paramètres à personnaliser
+    cheminModele = ThisDocument.Path & "\Modele_Rapport.dotx"
+    titre   = InputBox("Titre du rapport :", "Nouveau rapport", "Rapport mensuel")
+    auteur  = InputBox("Auteur :", "Auteur", Environ("USERNAME"))
+    periode = InputBox("Période :", "Période", Format(Date, "MMMM YYYY"))
+    
+    If titre = "" Then Exit Sub
+    
+    ' Créer un nouveau document depuis le modèle
+    Set doc = Documents.Add(Template:=cheminModele, NewTemplate:=False)
+    cheminSortie = ThisDocument.Path & "\" & titre & "_" & Format(Date, "YYYY-MM-DD") & ".docx"
+    
+    ' Désactiver le suivi des modifications
+    doc.TrackRevisions = False
+    
+    ' Remplacer les balises dans le document
+    Call RemplaceTexte(doc, "[[TITRE]]",   titre)
+    Call RemplaceTexte(doc, "[[AUTEUR]]",  auteur)
+    Call RemplaceTexte(doc, "[[PERIODE]]", periode)
+    Call RemplaceTexte(doc, "[[DATE]]",    Format(Date, "dd/mm/yyyy"))
+    
+    ' Mettre à jour la table des matières si présente
+    If doc.TablesOfContents.Count > 0 Then
+        doc.TablesOfContents(1).Update
+    End If
+    
+    ' Sauvegarder et ouvrir
+    doc.SaveAs2 Filename:=cheminSortie, FileFormat:=wdFormatXMLDocument
+    MsgBox "Rapport créé : " & Dir(cheminSortie), vbInformation
+End Sub
+
+' Fonction utilitaire de remplacement
+Sub RemplaceTexte(doc As Document, cherche As String, remplace As String)
+    With doc.Content.Find
+        .ClearFormatting
+        .Replacement.ClearFormatting
+        .Text = cherche
+        .Replacement.Text = remplace
+        .Forward = True
+        .Wrap = wdFindContinue
+        .MatchCase = False
+        .Execute Replace:=wdReplaceAll
+    End With
+End Sub`,tip:"<strong>Astuce :</strong> Créez un fichier <code>Modele_Rapport.dotx</code> avec des balises [[TITRE]], [[AUTEUR]] etc. là où vous voulez les valeurs dynamiques. La macro les remplace toutes automatiquement."},
+
+red2:{t:"Insérer date, auteur et titre automatiquement",d:"Insère ou met à jour les informations de base du document (date, auteur, titre) dans les en-têtes, pieds de page et propriétés.",c:`Sub InsererInfosDocument()
+    Dim doc As Document
+    Set doc = ActiveDocument
+    
+    ' Mise à jour des propriétés du document
+    doc.BuiltInDocumentProperties("Title").Value   = InputBox("Titre du document :", , doc.Name)
+    doc.BuiltInDocumentProperties("Author").Value  = Environ("USERNAME")
+    doc.BuiltInDocumentProperties("Company").Value = "Mon Entreprise"
+    
+    doc.TrackRevisions = False
+    
+    ' Insérer dans l'en-tête de la première section
+    Dim header As HeaderFooter
+    Set header = doc.Sections(1).Headers(wdHeaderFooterPrimary)
+    header.LinkToPrevious = False
+    
+    With header.Range
+        .Text = doc.BuiltInDocumentProperties("Title").Value & _
+                "   |   " & Environ("USERNAME") & _
+                "   |   " & Format(Date, "dd/mm/yyyy")
+        .Font.Size = 9
+        .Font.Color = RGB(100, 100, 100)
+        .ParagraphFormat.Alignment = wdAlignParagraphRight
+    End With
+    
+    ' Insérer le numéro de page dans le pied de page
+    Dim footer As HeaderFooter
+    Set footer = doc.Sections(1).Footers(wdHeaderFooterPrimary)
+    footer.LinkToPrevious = False
+    footer.Range.Text = ""
+    
+    With footer.Range
+        .ParagraphFormat.Alignment = wdAlignParagraphCenter
+        .Font.Size = 9
+        .Font.Color = RGB(100, 100, 100)
+    End With
+    
+    ' Ajouter le champ numéro de page
+    footer.Range.Fields.Add Range:=footer.Range, _
+        Type:=wdFieldPage
+    
+    ' Mettre à jour tous les champs
+    doc.Fields.Update
+    
+    MsgBox "En-têtes et propriétés mis à jour.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Pour insérer un champ date automatique (mis à jour à chaque ouverture), utilisez <code>doc.Fields.Add Range:=..., Type:=wdFieldDate</code> plutôt qu'une date statique."},
+
+red3:{t:"Créer et mettre à jour un sommaire",d:"Génère une table des matières basée sur les styles Titre 1/2/3 et la met à jour automatiquement.",c:`Sub CreerSommaireAuto()
+    Dim doc As Document
+    Set doc = ActiveDocument
+    doc.TrackRevisions = False
+    
+    ' Vérifier si une TDM existe déjà
+    If doc.TablesOfContents.Count > 0 Then
+        ' Mettre à jour la TDM existante
+        doc.TablesOfContents(1).Update
+        MsgBox "Table des matières mise à jour.", vbInformation
+        Exit Sub
+    End If
+    
+    ' Trouver le bon emplacement (début du document ou après le titre)
+    Dim rng As Range
+    Set rng = doc.Range(Start:=0, End:=0)
+    
+    ' Insérer le titre "Sommaire"
+    rng.InsertBefore "SOMMAIRE" & Chr(13)
+    
+    ' Appliquer le style Titre 1 au mot "SOMMAIRE"
+    Dim titreRng As Range
+    Set titreRng = doc.Range(Start:=0, End:=7)
+    titreRng.Style = doc.Styles(wdStyleHeading1)
+    
+    ' Repositionner après le titre
+    Set rng = doc.Range(Start:=doc.Paragraphs(2).Range.Start, _
+                         End:=doc.Paragraphs(2).Range.Start)
+    
+    ' Insérer la table des matières
+    doc.TablesOfContents.Add _
+        Range:=rng, _
+        UseHeadingStyles:=True, _
+        UpperHeadingLevel:=1, _
+        LowerHeadingLevel:=3, _
+        UseHyperlinks:=True, _
+        HidePageNumbersInWeb:=False, _
+        UseOutlineLevels:=False
+    
+    ' Forcer la mise à jour
+    doc.TablesOfContents(1).Update
+    
+    MsgBox "Sommaire créé avec succès.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Changez <code>LowerHeadingLevel:=3</code> en <code>2</code> pour n'afficher que les niveaux Titre 1 et Titre 2. Assurez-vous que vos titres utilisent bien les styles Titre 1/2/3 de Word."},
+
+red4:{t:"Numéroter les titres automatiquement",d:"Applique une numérotation hiérarchique automatique sur tous les titres du document (1, 1.1, 1.1.1...).",c:`Sub NumeroterTitres()
+    Dim doc As Document
+    Set doc = ActiveDocument
+    doc.TrackRevisions = False
+    
+    ' Supprimer d'abord la numérotation existante
+    Dim para As Paragraph
+    For Each para In doc.Paragraphs
+        Select Case para.Style.NameLocal
+            Case "Titre 1", "Heading 1", "Titre1"
+                ' Supprimer les numéros existants si présents
+                Dim txt As String : txt = para.Range.Text
+                If txt Like "[0-9]*. *" Or txt Like "[0-9]* *" Then
+                    ' Laisser tel quel pour ne pas supprimer le contenu
+                End If
+        End Select
+    Next para
+    
+    ' Appliquer la liste numérotée via le style de liste
+    Dim listTpl As ListTemplate
+    
+    ' Sélectionner tout le document et appliquer la numérotation multi-niveaux
+    ' via les styles de titres intégrés
+    Dim n1 As Integer, n2 As Integer, n3 As Integer
+    n1 = 0 : n2 = 0 : n3 = 0
+    
+    For Each para In doc.Paragraphs
+        Dim styleName As String
+        styleName = para.Style.NameLocal
+        
+        Select Case styleName
+            Case "Titre 1", "Heading 1"
+                n1 = n1 + 1 : n2 = 0 : n3 = 0
+                ' Insérer le numéro si pas déjà présent
+                If Not para.Range.Text Like n1 & ".*" Then
+                    para.Range.InsertBefore n1 & ". "
+                End If
+            Case "Titre 2", "Heading 2"
+                n2 = n2 + 1 : n3 = 0
+                If Not para.Range.Text Like n1 & "." & n2 & "*" Then
+                    para.Range.InsertBefore n1 & "." & n2 & " "
+                End If
+            Case "Titre 3", "Heading 3"
+                n3 = n3 + 1
+                If Not para.Range.Text Like n1 & "." & n2 & "." & n3 & "*" Then
+                    para.Range.InsertBefore n1 & "." & n2 & "." & n3 & " "
+                End If
+        End Select
+    Next para
+    
+    MsgBox "Numérotation appliquée.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> La méthode native la plus fiable pour numéroter les titres dans Word reste les styles de liste numérotée (Format → Liste à plusieurs niveaux). Ce code VBA est une approche textuelle directe."},
+
+red5:{t:"Générer un document depuis des données Excel",d:"Lit une feuille Excel et génère automatiquement un document Word structuré avec les données (rapport, fiche, compte-rendu).",c:`Sub GenererDocDepuisExcel()
+    ' Lance Word depuis Excel, ou utiliser depuis Word avec référence Excel
+    Dim xlApp As Object, xlWb As Object, xlWs As Object
+    Dim doc As Document
+    Dim chemin As String
+    
+    ' Ouvrir le fichier Excel source
+    chemin = Application.GetOpenFilename( _
+        FileFilter:="Fichiers Excel (*.xlsx;*.xlsm),*.xlsx;*.xlsm", _
+        Title:="Sélectionner le fichier de données")
+    If chemin = "False" Then Exit Sub
+    
+    Set xlApp = CreateObject("Excel.Application")
+    xlApp.Visible = False
+    Set xlWb = xlApp.Workbooks.Open(chemin, ReadOnly:=True)
+    Set xlWs = xlWb.Sheets(1)
+    
+    Dim lastRow As Long
+    lastRow = xlWs.Cells(xlWs.Rows.Count, "A").End(-4162).Row ' xlUp
+    
+    ' Créer un nouveau document Word
+    Set doc = Documents.Add
+    doc.TrackRevisions = False
+    
+    With doc.Content
+        ' Titre du document
+        .InsertAfter "RAPPORT GÉNÉRÉ AUTOMATIQUEMENT" & Chr(13)
+        doc.Paragraphs(1).Style = doc.Styles(wdStyleHeading1)
+        
+        .InsertAfter "Date : " & Format(Date, "dd/mm/yyyy") & Chr(13)
+        .InsertAfter "Source : " & Dir(chemin) & Chr(13) & Chr(13)
+        
+        ' Insérer les données sous forme de tableau
+        .InsertAfter "DONNÉES" & Chr(13)
+    End With
+    
+    doc.Paragraphs(doc.Paragraphs.Count - 1).Style = doc.Styles(wdStyleHeading2)
+    
+    ' Créer un tableau avec les données Excel
+    Dim lastCol As Integer
+    lastCol = xlWs.Cells(1, xlWs.Columns.Count).End(-4159).Column ' xlToLeft
+    
+    Dim tbl As Table
+    Set tbl = doc.Tables.Add( _
+        Range:=doc.Paragraphs(doc.Paragraphs.Count).Range, _
+        NumRows:=lastRow, NumColumns:=lastCol)
+    
+    Dim i As Long, j As Integer
+    For i = 1 To lastRow
+        For j = 1 To lastCol
+            tbl.Cell(i, j).Range.Text = CStr(xlWs.Cells(i, j).Value)
+            If i = 1 Then
+                tbl.Cell(i, j).Range.Font.Bold = True
+                tbl.Cell(i, j).Shading.BackgroundPatternColor = RGB(31, 73, 125)
+                tbl.Cell(i, j).Range.Font.Color = RGB(255, 255, 255)
+            End If
+        Next j
+    Next i
+    
+    xlWb.Close False : xlApp.Quit
+    Set xlWs=Nothing : Set xlWb=Nothing : Set xlApp=Nothing
+    
+    MsgBox lastRow & " lignes importées depuis Excel.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Pour lancer cette macro depuis Excel (plutôt que depuis Word), créez une instance Word avec <code>CreateObject('Word.Application')</code> et utilisez la même logique en sens inverse."},
+
+// ── MISE EN FORME ──
+mef1:{t:"Appliquer la charte graphique en un clic",d:"Applique une charte graphique complète sur le document actif : polices, couleurs, styles de titres et espacement.",c:`Sub AppliquerCharteGraphique()
+    Dim doc As Document
+    Set doc = ActiveDocument
+    doc.TrackRevisions = False
+    
+    ' ── Définir les constantes de charte ──
+    Const POLICE_TITRES As String = "Calibri"
+    Const POLICE_CORPS  As String = "Calibri"
+    Const TAILLE_CORPS  As Single = 11
+    Const COULEUR_T1    As Long = RGB(31, 73, 125)   ' Bleu marine
+    Const COULEUR_T2    As Long = RGB(68, 114, 196)  ' Bleu moyen
+    Const COULEUR_T3    As Long = RGB(91, 155, 213)  ' Bleu clair
+    
+    Application.ScreenUpdating = False
+    
+    ' ── Style Titre 1 ──
+    With doc.Styles(wdStyleHeading1).Font
+        .Name = POLICE_TITRES
+        .Size = 16
+        .Bold = True
+        .Color = COULEUR_T1
+        .AllCaps = True
+    End With
+    With doc.Styles(wdStyleHeading1).ParagraphFormat
+        .SpaceBefore = 18
+        .SpaceAfter = 6
+    End With
+    
+    ' ── Style Titre 2 ──
+    With doc.Styles(wdStyleHeading2).Font
+        .Name = POLICE_TITRES
+        .Size = 13
+        .Bold = True
+        .Color = COULEUR_T2
+    End With
+    With doc.Styles(wdStyleHeading2).ParagraphFormat
+        .SpaceBefore = 12
+        .SpaceAfter = 4
+    End With
+    
+    ' ── Style Titre 3 ──
+    With doc.Styles(wdStyleHeading3).Font
+        .Name = POLICE_TITRES
+        .Size = 11
+        .Bold = True
+        .Italic = True
+        .Color = COULEUR_T3
+    End With
+    
+    ' ── Style Corps de texte normal ──
+    With doc.Styles(wdStyleNormal).Font
+        .Name = POLICE_CORPS
+        .Size = TAILLE_CORPS
+        .Bold = False
+        .Color = RGB(0, 0, 0)
+    End With
+    With doc.Styles(wdStyleNormal).ParagraphFormat
+        .LineSpacingRule = wdLineSpaceMultiple
+        .LineSpacing = LinesToPoints(1.15)
+        .SpaceAfter = 6
+    End With
+    
+    Application.ScreenUpdating = True
+    MsgBox "Charte graphique appliquée.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Sauvegardez cette macro dans <code>Normal.dotm</code> pour l'avoir disponible dans tous vos documents. Modifiez les constantes RGB en tête de macro pour adapter à votre charte."},
+
+mef2:{t:"Remplacer tous les styles d'un document",d:"Remplace en masse un style par un autre dans tout le document (ex: tous les 'Corps de texte' → 'Normal').",c:`Sub RemplacerStyles()
+    Dim doc As Document
+    Set doc = ActiveDocument
+    doc.TrackRevisions = False
+    
+    ' Définir les paires ancien style → nouveau style
+    ' Format : Array(ancienStyle, nouveauStyle)
+    Dim remplacements(3, 1) As String
+    remplacements(0, 0) = "Corps de texte"    : remplacements(0, 1) = "Normal"
+    remplacements(1, 0) = "Corps de texte 2"  : remplacements(1, 1) = "Normal"
+    remplacements(2, 0) = "Default Paragraph Style" : remplacements(2, 1) = "Normal"
+    remplacements(3, 0) = "Texte de bulles"   : remplacements(3, 1) = "Normal"
+    
+    Application.ScreenUpdating = False
+    Dim n As Integer : n = 0
+    
+    Dim para As Paragraph
+    For Each para In doc.Paragraphs
+        Dim j As Integer
+        For j = 0 To UBound(remplacements, 1)
+            If para.Style.NameLocal = remplacements(j, 0) Then
+                ' Vérifier que le style de destination existe
+                On Error Resume Next
+                para.Style = doc.Styles(remplacements(j, 1))
+                If Err.Number = 0 Then n = n + 1
+                Err.Clear
+                On Error GoTo 0
+                Exit For
+            End If
+        Next j
+    Next para
+    
+    Application.ScreenUpdating = True
+    MsgBox n & " paragraphe(s) dont le style a été remplacé.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Vous pouvez aussi utiliser la méthode native Find/Replace avec formatage de style : dans Édition → Remplacer → Plus >> → Format → Style pour remplacer les styles sans VBA."},
+
+mef3:{t:"Harmoniser les polices dans tout le document",d:"Remplace toutes les occurrences d'une police par une autre dans le document entier.",c:`Sub HarmoniserPolices()
+    Dim doc As Document
+    Set doc = ActiveDocument
+    doc.TrackRevisions = False
+    
+    Dim anciennePolice As String
+    Dim nouvellePolice As String
+    
+    anciennePolice = InputBox("Police à remplacer :", "Harmonisation", "Arial")
+    If anciennePolice = "" Then Exit Sub
+    nouvellePolice = InputBox("Nouvelle police :", "Harmonisation", "Calibri")
+    If nouvellePolice = "" Then Exit Sub
+    
+    Application.ScreenUpdating = False
+    
+    ' Méthode 1 : via Find/Replace avec formatage
+    With doc.Content.Find
+        .ClearFormatting
+        .Replacement.ClearFormatting
+        .Text = ""
+        .Font.Name = anciennePolice
+        .Replacement.Text = ""
+        .Replacement.Font.Name = nouvellePolice
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = False
+        .Execute Replace:=wdReplaceAll
+    End With
+    
+    ' Méthode 2 : également vérifier les en-têtes et pieds de page
+    Dim sec As Section
+    For Each sec In doc.Sections
+        Dim hdr As HeaderFooter
+        For Each hdr In sec.Headers
+            With hdr.Range.Find
+                .ClearFormatting
+                .Replacement.ClearFormatting
+                .Text = "" : .Font.Name = anciennePolice
+                .Replacement.Text = "" : .Replacement.Font.Name = nouvellePolice
+                .Format = True
+                .Execute Replace:=wdReplaceAll
+            End With
+        Next hdr
+        Dim ftr As HeaderFooter
+        For Each ftr In sec.Footers
+            With ftr.Range.Find
+                .ClearFormatting
+                .Replacement.ClearFormatting
+                .Text = "" : .Font.Name = anciennePolice
+                .Replacement.Text = "" : .Replacement.Font.Name = nouvellePolice
+                .Format = True
+                .Execute Replace:=wdReplaceAll
+            End With
+        Next ftr
+    Next sec
+    
+    Application.ScreenUpdating = True
+    MsgBox "Police '" & anciennePolice & "' remplacée par '" & nouvellePolice & "'.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Cette macro remplace aussi la police dans les en-têtes et pieds de page, souvent oubliés. Pour changer la taille, ajoutez <code>.Font.Size = 10</code> dans la partie Replacement."},
+
+mef4:{t:"Surligner les mots-clés automatiquement",d:"Recherche une liste de mots-clés et les surligne automatiquement avec une couleur définie.",c:`Sub SurlighnerMotsCles()
+    Dim doc As Document
+    Set doc = ActiveDocument
+    doc.TrackRevisions = False
+    
+    ' Liste des mots-clés à surligner (à personnaliser)
+    Dim motsCles(4) As String
+    motsCles(0) = "URGENT"
+    motsCles(1) = "IMPORTANT"
+    motsCles(2) = "À VALIDER"
+    motsCles(3) = "CONFIDENTIEL"
+    motsCles(4) = "ACTION REQUISE"
+    
+    ' Couleurs correspondantes (wdYellow, wdRed, wdGreen, wdCyan, wdMagenta...)
+    Dim couleurs(4) As Long
+    couleurs(0) = wdYellow     ' URGENT → Jaune
+    couleurs(1) = wdRed        ' IMPORTANT → Rouge
+    couleurs(2) = wdGreen      ' À VALIDER → Vert
+    couleurs(3) = wdCyan       ' CONFIDENTIEL → Cyan
+    couleurs(4) = wdMagenta    ' ACTION REQUISE → Magenta
+    
+    Application.ScreenUpdating = False
+    Dim totalTrouves As Integer : totalTrouves = 0
+    
+    Dim i As Integer
+    For i = 0 To UBound(motsCles)
+        With doc.Content.Find
+            .ClearFormatting
+            .Replacement.ClearFormatting
+            .Text = motsCles(i)
+            .Replacement.Text = motsCles(i)
+            .Replacement.Highlight = True
+            .Forward = True
+            .Wrap = wdFindContinue
+            .MatchCase = False
+            .MatchWholeWord = True
+            .Format = True
+            
+            ' Compter les occurrences
+            Dim compteur As Integer : compteur = 0
+            Do While .Execute(Replace:=wdReplaceOne)
+                ' Appliquer la couleur de surligneur
+                doc.Content.Find.Parent.Replacement.HighlightColorIndex = couleurs(i)
+                compteur = compteur + 1
+            Loop
+            .Execute Replace:=wdReplaceAll
+            totalTrouves = totalTrouves + compteur
+        End With
+    Next i
+    
+    Application.ScreenUpdating = True
+    MsgBox totalTrouves & " mot(s)-clé(s) surlignés dans le document.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Pour supprimer tous les surlignages d'un coup, utilisez : <code>doc.Content.Find.ClearFormatting</code> puis remplacez <code>Highlight:=True</code> par <code>HighlightColorIndex:=wdNoHighlight</code>."},
+
+mef5:{t:"Formater titres, sous-titres et corps de texte",d:"Parcourt tout le document et applique une mise en forme précise sur chaque niveau de titre et le corps de texte.",c:`Sub FormaterDocumentComplet()
+    Dim doc As Document
+    Set doc = ActiveDocument
+    doc.TrackRevisions = False
+    Application.ScreenUpdating = False
+    
+    Dim para As Paragraph
+    Dim n As Integer : n = 0
+    
+    For Each para In doc.Paragraphs
+        With para.Range
+            Select Case para.Style.NameLocal
+                
+                Case "Titre 1", "Heading 1"
+                    .Font.Name = "Calibri"
+                    .Font.Size = 16
+                    .Font.Bold = True
+                    .Font.Color = RGB(31, 73, 125)
+                    .Font.AllCaps = True
+                    .ParagraphFormat.SpaceBefore = 20
+                    .ParagraphFormat.SpaceAfter = 8
+                    .ParagraphFormat.Alignment = wdAlignParagraphLeft
+                    n = n + 1
+                
+                Case "Titre 2", "Heading 2"
+                    .Font.Name = "Calibri"
+                    .Font.Size = 13
+                    .Font.Bold = True
+                    .Font.Color = RGB(68, 114, 196)
+                    .Font.AllCaps = False
+                    .ParagraphFormat.SpaceBefore = 14
+                    .ParagraphFormat.SpaceAfter = 4
+                    n = n + 1
+                
+                Case "Titre 3", "Heading 3"
+                    .Font.Name = "Calibri"
+                    .Font.Size = 11
+                    .Font.Bold = True
+                    .Font.Italic = True
+                    .Font.Color = RGB(91, 155, 213)
+                    .ParagraphFormat.SpaceBefore = 10
+                    .ParagraphFormat.SpaceAfter = 2
+                    n = n + 1
+                
+                Case "Normal", "Corps de texte", "Default"
+                    .Font.Name = "Calibri"
+                    .Font.Size = 11
+                    .Font.Bold = False
+                    .Font.Italic = False
+                    .Font.Color = RGB(0, 0, 0)
+                    .ParagraphFormat.LineSpacingRule = wdLineSpaceMultiple
+                    .ParagraphFormat.LineSpacing = LinesToPoints(1.15)
+                    .ParagraphFormat.SpaceAfter = 6
+                    n = n + 1
+            End Select
+        End With
+    Next para
+    
+    Application.ScreenUpdating = True
+    MsgBox n & " paragraphe(s) formaté(s).", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Préférez modifier les <strong>styles</strong> directement (comme dans la macro 'Charte graphique') plutôt que de formater paragraphe par paragraphe. La modification de style se propage automatiquement à tout le document."},
+
+// ── PUBLIPOSTAGE ──
+pub1:{t:"Lettres personnalisées depuis une liste Excel",d:"Lit une liste Excel et génère une lettre Word personnalisée pour chaque destinataire.",c:`Sub CreerLettresPersonnalisees()
+    Dim xlApp As Object, xlWb As Object, xlWs As Object
+    Dim chemin As String, dossierSortie As String
+    Dim n As Integer
+    
+    chemin = Application.GetOpenFilename( _
+        "Fichiers Excel (*.xlsx;*.xlsm),*.xlsx;*.xlsm", _
+        , "Sélectionner la liste des destinataires")
+    If chemin = "False" Then Exit Sub
+    
+    dossierSortie = ThisDocument.Path & "\Lettres_" & Format(Date, "YYYY-MM-DD") & "\"
+    If Dir(dossierSortie, vbDirectory) = "" Then MkDir dossierSortie
+    
+    Set xlApp = CreateObject("Excel.Application")
+    xlApp.Visible = False
+    Set xlWb = xlApp.Workbooks.Open(chemin, ReadOnly:=True)
+    Set xlWs = xlWb.Sheets(1)
+    
+    Dim lastRow As Long
+    lastRow = xlWs.Cells(xlWs.Rows.Count, "A").End(-4162).Row
+    
+    Application.ScreenUpdating = False
+    
+    Dim i As Long
+    For i = 2 To lastRow
+        Dim prenom  As String : prenom  = xlWs.Cells(i, 1).Value
+        Dim nom     As String : nom     = xlWs.Cells(i, 2).Value
+        Dim adresse As String : adresse = xlWs.Cells(i, 3).Value
+        Dim ville   As String : ville   = xlWs.Cells(i, 4).Value
+        
+        If nom = "" Then GoTo SuivantLettre
+        
+        ' Créer un nouveau document depuis le modèle
+        Dim doc As Document
+        Set doc = Documents.Add(Template:=ThisDocument.FullName, NewTemplate:=False)
+        doc.TrackRevisions = False
+        
+        ' Remplacer les balises
+        Call RemplacerDansDoc(doc, "[[PRENOM]]",  prenom)
+        Call RemplacerDansDoc(doc, "[[NOM]]",     UCase(nom))
+        Call RemplacerDansDoc(doc, "[[ADRESSE]]", adresse)
+        Call RemplacerDansDoc(doc, "[[VILLE]]",   ville)
+        Call RemplacerDansDoc(doc, "[[DATE]]",    Format(Date, "dd/mm/yyyy"))
+        
+        ' Sauvegarder
+        Dim nomFichier As String
+        nomFichier = dossierSortie & "Lettre_" & nom & "_" & prenom & ".docx"
+        doc.SaveAs2 Filename:=nomFichier, FileFormat:=wdFormatXMLDocument
+        doc.Close False
+        n = n + 1
+        
+        SuivantLettre:
+    Next i
+    
+    xlWb.Close False : xlApp.Quit
+    Application.ScreenUpdating = True
+    MsgBox n & " lettre(s) créée(s) dans : " & dossierSortie, vbInformation
+End Sub
+
+Sub RemplacerDansDoc(doc As Document, cherche As String, remplace As String)
+    With doc.Content.Find
+        .ClearFormatting : .Replacement.ClearFormatting
+        .Text = cherche : .Replacement.Text = remplace
+        .Forward = True : .Wrap = wdFindContinue
+        .Execute Replace:=wdReplaceAll
+    End With
+End Sub`,tip:"<strong>Astuce :</strong> Utilisez le document courant comme modèle (il contient les balises [[PRENOM]], [[NOM]] etc.). La macro crée une copie pour chaque destinataire sans modifier l'original."},
+
+pub2:{t:"Générer des contrats avec données variables",d:"Génère des contrats de travail ou de prestation personnalisés depuis un modèle et une liste de données.",c:`Sub GenererContrats()
+    Dim xlApp As Object, xlWb As Object, xlWs As Object
+    Dim cheminXL As String, cheminModele As String, dossierSortie As String
+    
+    cheminModele = Application.GetOpenFilename( _
+        "Modèles Word (*.dotx;*.docx;*.docm),*.dotx;*.docx;*.docm", _
+        , "Sélectionner le modèle de contrat")
+    If cheminModele = "False" Then Exit Sub
+    
+    cheminXL = Application.GetOpenFilename( _
+        "Fichiers Excel (*.xlsx;*.xlsm),*.xlsx;*.xlsm", _
+        , "Sélectionner les données")
+    If cheminXL = "False" Then Exit Sub
+    
+    dossierSortie = ThisDocument.Path & "\Contrats_" & Format(Date, "YYYY-MM-DD") & "\"
+    If Dir(dossierSortie, vbDirectory) = "" Then MkDir dossierSortie
+    
+    Set xlApp = CreateObject("Excel.Application")
+    xlApp.Visible = False
+    Set xlWb = xlApp.Workbooks.Open(cheminXL, ReadOnly:=True)
+    Set xlWs = xlWb.Sheets(1)
+    
+    ' Lire les en-têtes (ligne 1) pour connaître les balises
+    Dim lastCol As Integer
+    lastCol = xlWs.Cells(1, xlWs.Columns.Count).End(-4159).Column
+    Dim lastRow As Long
+    lastRow = xlWs.Cells(xlWs.Rows.Count, "A").End(-4162).Row
+    
+    Application.ScreenUpdating = False
+    Dim n As Integer
+    
+    Dim i As Long
+    For i = 2 To lastRow
+        Dim doc As Document
+        Set doc = Documents.Add(Template:=cheminModele)
+        doc.TrackRevisions = False
+        
+        ' Remplacer chaque colonne (balise = [[NOM_EN_TETE]])
+        Dim j As Integer
+        For j = 1 To lastCol
+            Dim balise As String : balise = "[[" & UCase(xlWs.Cells(1, j).Value) & "]]"
+            Dim valeur As String : valeur = CStr(xlWs.Cells(i, j).Value)
+            Call RemplacerDansDoc(doc, balise, valeur)
+        Next j
+        
+        ' Remplacer la date systématiquement
+        Call RemplacerDansDoc(doc, "[[DATE_JOUR]]", Format(Date, "dd/mm/yyyy"))
+        
+        Dim nomFichier As String
+        nomFichier = dossierSortie & "Contrat_" & xlWs.Cells(i, 1).Value & ".docx"
+        doc.SaveAs2 Filename:=nomFichier, FileFormat:=wdFormatXMLDocument
+        doc.Close False
+        n = n + 1
+    Next i
+    
+    xlWb.Close False : xlApp.Quit
+    Application.ScreenUpdating = True
+    MsgBox n & " contrat(s) généré(s) dans : " & dossierSortie, vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Les balises dans le modèle doivent correspondre aux en-têtes Excel en majuscules entre [[ ]]. Ex: en-tête 'Nom' → balise [[NOM]]. C'est flexible et ne nécessite aucune adaptation du code."},
+
+pub3:{t:"Remplir automatiquement les signets d'un modèle",d:"Localise les signets dans le document et les remplit avec des valeurs provenant d'une boîte de dialogue ou d'une source de données.",c:`Sub RemplirSignets()
+    Dim doc As Document
+    Set doc = ActiveDocument
+    doc.TrackRevisions = False
+    
+    ' Vérifier qu'il y a des signets
+    If doc.Bookmarks.Count = 0 Then
+        MsgBox "Aucun signet trouvé dans ce document.", vbExclamation
+        Exit Sub
+    End If
+    
+    Application.ScreenUpdating = False
+    
+    ' Définir les valeurs pour chaque signet
+    ' (Adapter selon vos signets réels)
+    Dim valeurs As Object
+    Set valeurs = CreateObject("Scripting.Dictionary")
+    valeurs.Add "NomEntreprise",   "ACME Corporation"
+    valeurs.Add "DateContrat",     Format(Date, "dd/mm/yyyy")
+    valeurs.Add "NomSignataire",   Environ("USERNAME")
+    valeurs.Add "NumeroContrat",   "CTR-" & Format(Date, "YYYYMM") & "-001"
+    valeurs.Add "MontantTTC",      "10 000,00 €"
+    valeurs.Add "DureeContrat",    "12 mois"
+    valeurs.Add "DateDebut",       Format(Date + 1, "dd/mm/yyyy")
+    valeurs.Add "DateFin",         Format(DateAdd("m", 12, Date), "dd/mm/yyyy")
+    
+    Dim n As Integer : n = 0
+    Dim bm As Bookmark
+    
+    For Each bm In doc.Bookmarks
+        If valeurs.Exists(bm.Name) Then
+            ' Sauvegarder la position du signet
+            Dim rng As Range
+            Set rng = bm.Range
+            ' Insérer le texte dans le signet
+            rng.Text = valeurs(bm.Name)
+            ' Recréer le signet (car il est supprimé quand on modifie son contenu)
+            doc.Bookmarks.Add Name:=bm.Name, Range:=rng
+            n = n + 1
+        End If
+    Next bm
+    
+    ' Mettre à jour les champs
+    doc.Fields.Update
+    
+    Application.ScreenUpdating = True
+    MsgBox n & " signet(s) rempli(s) sur " & doc.Bookmarks.Count & " trouvé(s).", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Pour créer un signet dans Word : sélectionnez le texte à remplacer → Insertion → Signet → donnez-lui un nom sans espace. Le signet sera rempli automatiquement par la macro."},
+
+pub4:{t:"Exporter chaque document personnalisé en PDF",d:"Prend tous les .docx d'un dossier et les exporte en PDF dans un dossier de sortie.",c:`Sub ExporterDossierEnPDF()
+    Dim dossierSource As String, dossierPDF As String
+    Dim fichier As String, wdDoc As Document
+    Dim n As Integer
+    
+    With Application.FileDialog(msoFileDialogFolderPicker)
+        .Title = "Dossier contenant les documents Word"
+        If .Show <> -1 Then Exit Sub
+        dossierSource = .SelectedItems(1) & "\"
+    End With
+    
+    dossierPDF = dossierSource & "PDF_Export_" & Format(Date, "YYYY-MM-DD") & "\"
+    If Dir(dossierPDF, vbDirectory) = "" Then MkDir dossierPDF
+    
+    Application.ScreenUpdating = False
+    Application.DisplayAlerts = False
+    
+    fichier = Dir(dossierSource & "*.docx")
+    
+    Do While fichier <> ""
+        Set wdDoc = Documents.Open(dossierSource & fichier, ReadOnly:=True, Visible:=False)
+        
+        Dim nomPDF As String
+        nomPDF = dossierPDF & Left(fichier, Len(fichier) - 5) & ".pdf"
+        
+        ' Paramétrer la mise en page avant export
+        With wdDoc.PageSetup
+            .TopMargin = CentimetersToPoints(2.5)
+            .BottomMargin = CentimetersToPoints(2.5)
+            .LeftMargin = CentimetersToPoints(2.5)
+            .RightMargin = CentimetersToPoints(2.5)
+        End With
+        
+        ' Exporter en PDF
+        wdDoc.ExportAsFixedFormat _
+            OutputFileName:=nomPDF, _
+            ExportFormat:=wdExportFormatPDF, _
+            OpenAfterExport:=False, _
+            OptimizeFor:=wdExportOptimizeForPrint, _
+            Range:=wdExportAllDocument, _
+            IncludeDocProps:=True
+        
+        wdDoc.Close False
+        n = n + 1
+        fichier = Dir()
+    Loop
+    
+    Application.DisplayAlerts = True
+    Application.ScreenUpdating = True
+    MsgBox n & " document(s) exporté(s) en PDF dans : " & vbNewLine & dossierPDF, vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> <code>OptimizeFor:=wdExportOptimizeForPrint</code> génère un PDF haute qualité. Utilisez <code>wdExportOptimizeForOnScreen</code> pour un PDF plus léger optimisé pour l'écran."},
+
+pub5:{t:"Envoyer chaque document par e-mail via Outlook",d:"Envoie chaque document Word d'un dossier par e-mail à son destinataire, en lisant les adresses depuis Excel.",c:`Sub EnvoyerDocumentsParEmail()
+    ' Nécessite : Outils > Références > Microsoft Outlook Object Library
+    Dim xlApp As Object, xlWb As Object, xlWs As Object
+    Dim OutApp As Object, OutMail As Object
+    Dim cheminXL As String, dossierDocs As String
+    
+    cheminXL = Application.GetOpenFilename( _
+        "Fichiers Excel (*.xlsx;*.xlsm),*.xlsx;*.xlsm", _
+        , "Fichier Excel : Nom | Email | Fichier joint")
+    If cheminXL = "False" Then Exit Sub
+    
+    With Application.FileDialog(msoFileDialogFolderPicker)
+        .Title = "Dossier contenant les documents"
+        If .Show <> -1 Then Exit Sub
+        dossierDocs = .SelectedItems(1) & "\"
+    End With
+    
+    Set xlApp = CreateObject("Excel.Application")
+    xlApp.Visible = False
+    Set xlWb = xlApp.Workbooks.Open(cheminXL, ReadOnly:=True)
+    Set xlWs = xlWb.Sheets(1)
+    
+    Dim lastRow As Long
+    lastRow = xlWs.Cells(xlWs.Rows.Count, "A").End(-4162).Row
+    
+    If MsgBox("Envoyer " & lastRow - 1 & " e-mail(s) ?", vbYesNo + vbQuestion) = vbNo Then
+        xlWb.Close False : xlApp.Quit : Exit Sub
+    End If
+    
+    Set OutApp = CreateObject("Outlook.Application")
+    Dim n As Integer
+    
+    Dim i As Long
+    For i = 2 To lastRow
+        Dim nom     As String : nom     = xlWs.Cells(i, 1).Value
+        Dim email   As String : email   = xlWs.Cells(i, 2).Value
+        Dim fichier As String : fichier = xlWs.Cells(i, 3).Value
+        
+        If email = "" Then GoTo SuivantEmail
+        
+        Set OutMail = OutApp.CreateItem(0)
+        With OutMail
+            .To = email
+            .Subject = "Votre document — " & Format(Date, "dd/mm/yyyy")
+            .HTMLBody = "<p>Bonjour " & nom & ",</p>" & _
+                "<p>Veuillez trouver ci-joint votre document.</p>" & _
+                "<p>Cordialement</p>"
+            ' Ajouter la pièce jointe si le fichier existe
+            If fichier <> "" And Dir(dossierDocs & fichier) <> "" Then
+                .Attachments.Add dossierDocs & fichier
+            End If
+            .Send ' Remplacer par .Display pour vérification
+        End With
+        Set OutMail = Nothing
+        n = n + 1
+        SuivantEmail:
+    Next i
+    
+    xlWb.Close False : xlApp.Quit
+    Set OutApp = Nothing
+    MsgBox n & " e-mail(s) envoyé(s).", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Testez toujours avec <code>.Display</code> avant le premier vrai envoi. Le fichier Excel doit avoir : Col A = Nom, Col B = Email, Col C = Nom du fichier (sans chemin)."},
+
+// ── TABLEAUX ──
+tab1:{t:"Créer un tableau formaté depuis Excel",d:"Importe une plage Excel et la transforme en tableau Word parfaitement mis en forme.",c:`Sub InsererTableauDepuisExcel()
+    Dim xlApp As Object, xlWb As Object, xlWs As Object
+    Dim chemin As String
+    
+    chemin = Application.GetOpenFilename( _
+        "Fichiers Excel (*.xlsx;*.xlsm),*.xlsx;*.xlsm", _
+        , "Sélectionner le fichier Excel")
+    If chemin = "False" Then Exit Sub
+    
+    Set xlApp = CreateObject("Excel.Application")
+    xlApp.Visible = False
+    Set xlWb = xlApp.Workbooks.Open(chemin, ReadOnly:=True)
+    Set xlWs = xlWb.Sheets(1)
+    
+    Dim lastRow As Long : lastRow = xlWs.Cells(xlWs.Rows.Count,"A").End(-4162).Row
+    Dim lastCol As Integer : lastCol = xlWs.Cells(1,xlWs.Columns.Count).End(-4159).Column
+    
+    ' Insérer le tableau dans Word à la position du curseur
+    Dim doc As Document : Set doc = ActiveDocument
+    doc.TrackRevisions = False
+    
+    Dim rng As Range
+    Set rng = Selection.Range
+    
+    Dim tbl As Table
+    Set tbl = doc.Tables.Add(rng, lastRow, lastCol, _
+        wdWord9TableBehavior, wdAutoFitFixed)
+    
+    ' Remplir les données
+    Dim i As Long, j As Integer
+    For i = 1 To lastRow
+        For j = 1 To lastCol
+            Dim val As String : val = CStr(xlWs.Cells(i, j).Value)
+            tbl.Cell(i, j).Range.Text = val
+        Next j
+    Next i
+    
+    ' Mise en forme du tableau
+    ' En-tête (ligne 1)
+    With tbl.Rows(1)
+        .HeadingFormat = True
+        .Range.Font.Bold = True
+        .Range.Font.Color = RGB(255, 255, 255)
+        .Range.Shading.BackgroundPatternColor = RGB(31, 73, 125)
+    End With
+    
+    ' Alternance des lignes
+    For i = 2 To lastRow
+        If i Mod 2 = 0 Then
+            tbl.Rows(i).Range.Shading.BackgroundPatternColor = RGB(242, 242, 242)
+        Else
+            tbl.Rows(i).Range.Shading.BackgroundPatternColor = wdColorWhite
+        End If
+    Next i
+    
+    ' Bordures du tableau
+    With tbl.Borders
+        .InsideLineStyle = wdLineStyleSingle
+        .OutsideLineStyle = wdLineStyleSingle
+        .InsideLineWidth = wdLineWidth050pt
+        .OutsideLineWidth = wdLineWidth100pt
+    End With
+    
+    ' Ajuster automatiquement les colonnes
+    tbl.AutoFitBehavior wdAutoFitContent
+    
+    xlWb.Close False : xlApp.Quit
+    MsgBox "Tableau inséré avec " & lastRow & " lignes.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Pour insérer à la fin du document plutôt qu'à la position du curseur, utilisez <code>doc.Range(doc.Content.End-1, doc.Content.End-1)</code> comme plage cible."},
+
+tab2:{t:"Trier les lignes d'un tableau Word",d:"Trie les lignes d'un tableau Word selon une colonne choisie, par ordre croissant ou décroissant.",c:`Sub TrierTableauWord()
+    Dim doc As Document : Set doc = ActiveDocument
+    doc.TrackRevisions = False
+    
+    ' Vérifier qu'il y a des tableaux
+    If doc.Tables.Count = 0 Then
+        MsgBox "Aucun tableau trouvé.", vbExclamation : Exit Sub
+    End If
+    
+    ' Si plusieurs tableaux, demander lequel
+    Dim numTable As Integer
+    If doc.Tables.Count > 1 Then
+        numTable = CInt(InputBox("Numéro du tableau à trier (1 à " & doc.Tables.Count & ") :", "Tri", "1"))
+        If numTable < 1 Or numTable > doc.Tables.Count Then Exit Sub
+    Else
+        numTable = 1
+    End If
+    
+    Dim tbl As Table
+    Set tbl = doc.Tables(numTable)
+    
+    Dim numCol As Integer
+    numCol = CInt(InputBox("Numéro de la colonne de tri (1 à " & tbl.Columns.Count & ") :", "Tri", "1"))
+    If numCol < 1 Or numCol > tbl.Columns.Count Then Exit Sub
+    
+    Dim ordre As Integer
+    ordre = MsgBox("Ordre croissant ?", vbYesNo + vbQuestion)
+    Dim wdOrdre As Long
+    wdOrdre = IIf(ordre = vbYes, wdSortOrderAscending, wdSortOrderDescending)
+    
+    ' Effectuer le tri
+    tbl.Sort _
+        ExcludeHeader:=True, _
+        FieldNumber:="Colonne " & numCol, _
+        SortFieldType:=wdSortFieldAlphanumeric, _
+        SortOrder:=wdOrdre
+    
+    MsgBox "Tableau trié par colonne " & numCol & ".", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Changez <code>wdSortFieldAlphanumeric</code> en <code>wdSortFieldNumeric</code> pour trier des colonnes de nombres, ou <code>wdSortFieldDate</code> pour des colonnes de dates."},
+
+tab3:{t:"Calculer et insérer des totaux dans un tableau",d:"Parcourt toutes les colonnes numériques d'un tableau Word et insère les totaux dans la dernière ligne.",c:`Sub InsererTotauxTableau()
+    Dim doc As Document : Set doc = ActiveDocument
+    doc.TrackRevisions = False
+    
+    If doc.Tables.Count = 0 Then
+        MsgBox "Aucun tableau trouvé.", vbExclamation : Exit Sub
+    End If
+    
+    Dim tbl As Table : Set tbl = doc.Tables(1)
+    Dim nbLignes As Integer : nbLignes = tbl.Rows.Count
+    Dim nbCols As Integer : nbCols = tbl.Columns.Count
+    
+    ' Ajouter une ligne de total si elle n'existe pas
+    Dim derniereLigne As String
+    derniereLigne = LCase(Trim(tbl.Cell(nbLignes, 1).Range.Text))
+    derniereLigne = Replace(derniereLigne, Chr(13), "") ' Supprimer retour chariot
+    derniereLigne = Replace(derniereLigne, Chr(7), "")  ' Supprimer marque de cellule
+    
+    If derniereLigne <> "total" And derniereLigne <> "totaux" Then
+        tbl.Rows.Add
+        nbLignes = tbl.Rows.Count
+        tbl.Cell(nbLignes, 1).Range.Text = "TOTAL"
+        With tbl.Cell(nbLignes, 1).Range.Font
+            .Bold = True
+            .Color = RGB(255, 255, 255)
+        End With
+        tbl.Rows(nbLignes).Range.Shading.BackgroundPatternColor = RGB(31, 73, 125)
+    End If
+    
+    ' Calculer les totaux colonne par colonne
+    Dim j As Integer
+    For j = 2 To nbCols
+        Dim total As Double : total = 0
+        Dim hasNumbers As Boolean : hasNumbers = False
+        Dim i As Integer
+        For i = 2 To nbLignes - 1
+            Dim cellText As String
+            cellText = Trim(tbl.Cell(i, j).Range.Text)
+            cellText = Replace(cellText, Chr(13), "")
+            cellText = Replace(cellText, Chr(7), "")
+            cellText = Replace(cellText, " ", "")
+            cellText = Replace(cellText, "€", "")
+            cellText = Replace(cellText, ",", ".")
+            If IsNumeric(cellText) Then
+                total = total + CDbl(cellText)
+                hasNumbers = True
+            End If
+        Next i
+        
+        If hasNumbers Then
+            tbl.Cell(nbLignes, j).Range.Text = Format(total, "#,##0.00")
+            tbl.Cell(nbLignes, j).Range.Font.Bold = True
+            tbl.Cell(nbLignes, j).Range.Font.Color = RGB(255, 255, 255)
+        End If
+    Next j
+    
+    MsgBox "Totaux calculés et insérés.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Le code nettoie les symboles monétaires (€) et les espaces avant de calculer. Adaptez le nettoyage si vos cellules contiennent d'autres caractères non numériques."},
+
+tab4:{t:"Supprimer les lignes vides dans les tableaux",d:"Parcourt tous les tableaux du document et supprime les lignes entièrement vides.",c:`Sub SupprimerLignesVidesTableaux()
+    Dim doc As Document : Set doc = ActiveDocument
+    doc.TrackRevisions = False
+    
+    If doc.Tables.Count = 0 Then
+        MsgBox "Aucun tableau trouvé.", vbExclamation : Exit Sub
+    End If
+    
+    Application.ScreenUpdating = False
+    Dim nbSupprimes As Integer : nbSupprimes = 0
+    Dim tbl As Table
+    
+    For Each tbl In doc.Tables
+        Dim i As Integer
+        ' Parcourir de bas en haut pour éviter les décalages
+        For i = tbl.Rows.Count To 1 Step -1
+            Dim ligneVide As Boolean : ligneVide = True
+            Dim j As Integer
+            For j = 1 To tbl.Columns.Count
+                Dim cellText As String
+                cellText = Trim(tbl.Cell(i, j).Range.Text)
+                cellText = Replace(cellText, Chr(13), "")
+                cellText = Replace(cellText, Chr(7), "")
+                If cellText <> "" Then
+                    ligneVide = False
+                    Exit For
+                End If
+            Next j
+            If ligneVide And i > 1 Then ' Ne pas supprimer la 1ère ligne (en-tête)
+                tbl.Rows(i).Delete
+                nbSupprimes = nbSupprimes + 1
+            End If
+        Next i
+    Next tbl
+    
+    Application.ScreenUpdating = True
+    MsgBox nbSupprimes & " ligne(s) vide(s) supprimée(s) dans " & doc.Tables.Count & " tableau(x).", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> En Word, chaque cellule contient toujours au moins <code>Chr(13)</code> (retour chariot) et <code>Chr(7)</code> (marque de fin de cellule). Ces caractères doivent être nettoyés pour tester si une cellule est vraiment vide."},
+
+tab5:{t:"Mise en forme conditionnelle dans un tableau",d:"Colorie les cellules d'un tableau selon leur valeur (ex: rouge si négatif, vert si dépassement de seuil).",c:`Sub MiseEnFormeConditionnelleTableau()
+    Dim doc As Document : Set doc = ActiveDocument
+    doc.TrackRevisions = False
+    
+    If doc.Tables.Count = 0 Then
+        MsgBox "Aucun tableau trouvé.", vbExclamation : Exit Sub
+    End If
+    
+    Dim tbl As Table : Set tbl = doc.Tables(1)
+    Application.ScreenUpdating = False
+    
+    Dim i As Integer, j As Integer
+    
+    For i = 2 To tbl.Rows.Count ' Ignorer l'en-tête
+        For j = 2 To tbl.Columns.Count ' Ignorer la 1ère colonne (libellés)
+            Dim cellText As String
+            cellText = Trim(tbl.Cell(i, j).Range.Text)
+            cellText = Replace(cellText, Chr(13), "")
+            cellText = Replace(cellText, Chr(7), "")
+            cellText = Replace(cellText, " ", "")
+            cellText = Replace(cellText, "€", "")
+            cellText = Replace(cellText, "%", "")
+            cellText = Replace(cellText, ",", ".")
+            
+            If IsNumeric(cellText) Then
+                Dim val As Double : val = CDbl(cellText)
+                
+                ' Règles de mise en forme (à adapter)
+                Select Case True
+                    Case val < 0
+                        ' Valeur négative → Rouge
+                        tbl.Cell(i, j).Range.Shading.BackgroundPatternColor = RGB(255, 199, 206)
+                        tbl.Cell(i, j).Range.Font.Color = RGB(156, 0, 6)
+                    Case val = 0
+                        ' Valeur nulle → Gris
+                        tbl.Cell(i, j).Range.Shading.BackgroundPatternColor = RGB(242, 242, 242)
+                    Case val > 0 And val < 50
+                        ' Valeur faible → Orange
+                        tbl.Cell(i, j).Range.Shading.BackgroundPatternColor = RGB(255, 235, 156)
+                        tbl.Cell(i, j).Range.Font.Color = RGB(156, 87, 0)
+                    Case val >= 50
+                        ' Valeur forte → Vert
+                        tbl.Cell(i, j).Range.Shading.BackgroundPatternColor = RGB(198, 239, 206)
+                        tbl.Cell(i, j).Range.Font.Color = RGB(0, 97, 0)
+                End Select
+            End If
+        Next j
+    Next i
+    
+    Application.ScreenUpdating = True
+    MsgBox "Mise en forme conditionnelle appliquée.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Adaptez les seuils (0, 50) et les règles <code>Select Case</code> selon votre logique métier. Vous pouvez aussi vérifier du texte : <code>Case LCase(cellText) = 'ok'</code>."},
+
+// ── RÉVISIONS ──
+rev1:{t:"Accepter ou rejeter toutes les révisions",d:"Accepte ou rejette en masse toutes les révisions suivies du document actif.",c:`Sub GererRevisions()
+    Dim doc As Document : Set doc = ActiveDocument
+    
+    If doc.Revisions.Count = 0 Then
+        MsgBox "Aucune révision dans ce document.", vbInformation : Exit Sub
+    End If
+    
+    Dim choix As VbMsgBoxResult
+    choix = MsgBox("Cliquez OUI pour ACCEPTER toutes les révisions." & vbNewLine & _
+                   "Cliquez NON pour les REJETER toutes." & vbNewLine & vbNewLine & _
+                   doc.Revisions.Count & " révision(s) trouvée(s).", _
+                   vbYesNoCancel + vbQuestion, "Gestion des révisions")
+    
+    If choix = vbCancel Then Exit Sub
+    
+    Application.ScreenUpdating = False
+    
+    If choix = vbYes Then
+        ' Accepter toutes les révisions
+        doc.Revisions.AcceptAll
+        MsgBox "Toutes les révisions ont été acceptées.", vbInformation
+    Else
+        ' Rejeter toutes les révisions
+        doc.Revisions.RejectAll
+        MsgBox "Toutes les révisions ont été rejetées.", vbInformation
+    End If
+    
+    ' Désactiver le suivi des modifications après traitement
+    doc.TrackRevisions = False
+    
+    Application.ScreenUpdating = True
+End Sub
+
+' ── Version sélective : accepter seulement certains auteurs ──
+Sub AccepterRevisionParAuteur()
+    Dim doc As Document : Set doc = ActiveDocument
+    Dim auteurCible As String
+    auteurCible = InputBox("Accepter les révisions de quel auteur ?", "Auteur", "")
+    If auteurCible = "" Then Exit Sub
+    
+    Dim rev As Revision
+    Dim n As Integer
+    ' Parcourir de la fin vers le début
+    Dim i As Long
+    For i = doc.Revisions.Count To 1 Step -1
+        Set rev = doc.Revisions(i)
+        If InStr(LCase(rev.Author), LCase(auteurCible)) > 0 Then
+            rev.Accept
+            n = n + 1
+        End If
+    Next i
+    MsgBox n & " révision(s) de '" & auteurCible & "' acceptée(s).", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> La version sélective est utile lors de relectures à plusieurs : vous pouvez n'accepter que les corrections de la chef de projet et relire manuellement les autres."},
+
+rev2:{t:"Rechercher et remplacer du texte en masse",d:"Effectue des remplacements multiples dans tout le document depuis une liste de correspondances.",c:`Sub RechercherRemplacerEnMasse()
+    Dim doc As Document : Set doc = ActiveDocument
+    doc.TrackRevisions = False
+    Application.ScreenUpdating = False
+    
+    ' Table de remplacement (à adapter)
+    Dim remplacements(5, 1) As String
+    remplacements(0, 0) = "M. Dupont"      : remplacements(0, 1) = "M. Martin"
+    remplacements(1, 0) = "Société ABC"    : remplacements(1, 1) = "Société XYZ"
+    remplacements(2, 0) = "01/01/2024"     : remplacements(2, 1) = Format(Date, "dd/mm/yyyy")
+    remplacements(3, 0) = "ACME"           : remplacements(3, 1) = "NOVA"
+    remplacements(4, 0) = "confidentiel"   : remplacements(4, 1) = "CONFIDENTIEL"
+    remplacements(5, 0) = "N/A"            : remplacements(5, 1) = "Non applicable"
+    
+    Dim totalRemplacements As Long : totalRemplacements = 0
+    Dim i As Integer
+    
+    For i = 0 To UBound(remplacements, 1)
+        If remplacements(i, 0) = "" Then GoTo Suite
+        
+        With doc.Content.Find
+            .ClearFormatting
+            .Replacement.ClearFormatting
+            .Text = remplacements(i, 0)
+            .Replacement.Text = remplacements(i, 1)
+            .Forward = True
+            .Wrap = wdFindContinue
+            .MatchCase = False
+            .MatchWholeWord = False
+            .Format = False
+            
+            ' Compter avant de remplacer
+            Dim compteur As Long : compteur = 0
+            Do While .Execute
+                compteur = compteur + 1
+            Loop
+            
+            ' Effectuer le remplacement
+            .Text = remplacements(i, 0)
+            .Execute Replace:=wdReplaceAll
+            totalRemplacements = totalRemplacements + compteur
+        End With
+        Suite:
+    Next i
+    
+    Application.ScreenUpdating = True
+    MsgBox totalRemplacements & " remplacement(s) effectué(s).", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Pour charger la table depuis Excel, lisez une feuille de correspondances avec les deux colonnes. Cela permet de modifier les remplacements sans toucher au code VBA."},
+
+rev3:{t:"Supprimer les commentaires et annotations",d:"Supprime tous les commentaires, annotations et mises en forme de révision du document.",c:`Sub SupprimerCommentaires()
+    Dim doc As Document : Set doc = ActiveDocument
+    
+    Dim nbComm As Integer : nbComm = doc.Comments.Count
+    Dim nbRev As Integer : nbRev = doc.Revisions.Count
+    
+    If nbComm = 0 And nbRev = 0 Then
+        MsgBox "Aucun commentaire ni révision trouvé.", vbInformation : Exit Sub
+    End If
+    
+    Dim msg As String
+    msg = "Ce document contient :" & vbNewLine & _
+          "- " & nbComm & " commentaire(s)" & vbNewLine & _
+          "- " & nbRev & " révision(s)" & vbNewLine & vbNewLine & _
+          "Supprimer tout ?"
+    
+    If MsgBox(msg, vbYesNo + vbQuestion, "Nettoyage") = vbNo Then Exit Sub
+    
+    Application.ScreenUpdating = False
+    
+    ' Supprimer tous les commentaires
+    If nbComm > 0 Then
+        doc.DeleteAllComments
+    End If
+    
+    ' Accepter (donc appliquer) toutes les révisions
+    If nbRev > 0 Then
+        doc.Revisions.AcceptAll
+    End If
+    
+    ' Désactiver le suivi des modifications
+    doc.TrackRevisions = False
+    
+    ' Supprimer les mises en évidence (surlignage)
+    Dim choixSurli As VbMsgBoxResult
+    choixSurli = MsgBox("Supprimer aussi tous les surlignages ?", vbYesNo + vbQuestion)
+    If choixSurli = vbYes Then
+        With doc.Content.Find
+            .ClearFormatting
+            .Replacement.ClearFormatting
+            .Text = ""
+            .Highlight = True
+            .Replacement.Text = ""
+            .Replacement.Highlight = False
+            .Replacement.HighlightColorIndex = wdNoHighlight
+            .Format = True
+            .Execute Replace:=wdReplaceAll
+        End With
+    End If
+    
+    Application.ScreenUpdating = True
+    MsgBox "Document nettoyé : " & nbComm & " commentaire(s) et " & nbRev & " révision(s) supprimés.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Avant d'envoyer un document à un client, pensez aussi à supprimer les métadonnées sensibles (auteur, commentaires supprimés) via la macro 'Supprimer métadonnées'."},
+
+rev4:{t:"Vérifier la présence de mentions obligatoires",d:"Contrôle que le document contient toutes les clauses ou mentions légales obligatoires.",c:`Sub VerifierMentionsObligatoires()
+    Dim doc As Document : Set doc = ActiveDocument
+    
+    ' Liste des mentions obligatoires à vérifier
+    Dim mentions(6) As String
+    mentions(0) = "mentions légales"
+    mentions(1) = "SIRET"
+    mentions(2) = "TVA"
+    mentions(3) = "conditions générales"
+    mentions(4) = "politique de confidentialité"
+    mentions(5) = "droit de rétractation"
+    mentions(6) = "responsable de traitement"
+    
+    Application.ScreenUpdating = False
+    
+    Dim manquantes() As String
+    Dim nbManquantes As Integer : nbManquantes = 0
+    ReDim manquantes(UBound(mentions))
+    
+    Dim i As Integer
+    For i = 0 To UBound(mentions)
+        If mentions(i) = "" Then GoTo SuiteMention
+        
+        Dim trouve As Boolean : trouve = False
+        With doc.Content.Find
+            .ClearFormatting
+            .Text = mentions(i)
+            .Forward = True
+            .Wrap = wdFindStop
+            .MatchCase = False
+            .MatchWholeWord = False
+            trouve = .Execute
+        End With
+        
+        If Not trouve Then
+            manquantes(nbManquantes) = mentions(i)
+            nbManquantes = nbManquantes + 1
+        End If
+        SuiteMention:
+    Next i
+    
+    Application.ScreenUpdating = True
+    
+    If nbManquantes = 0 Then
+        MsgBox "✓ Toutes les mentions obligatoires sont présentes.", vbInformation
+    Else
+        Dim msg As String : msg = "⚠ " & nbManquantes & " mention(s) manquante(s) :" & vbNewLine & vbNewLine
+        For i = 0 To nbManquantes - 1
+            msg = msg & "  • " & manquantes(i) & vbNewLine
+        Next i
+        MsgBox msg, vbExclamation, "Mentions manquantes"
+    End If
+End Sub`,tip:"<strong>Astuce :</strong> Adaptez le tableau <code>mentions()</code> à votre contexte (contrats de vente, RGPD, marchés publics...). La recherche est insensible à la casse grâce à <code>MatchCase = False</code>."},
+
+rev5:{t:"Comparer deux versions d'un document",d:"Ouvre deux documents Word et lance une comparaison automatique avec mise en évidence des différences.",c:`Sub ComparerDeuxDocuments()
+    Dim cheminOriginal As String, cheminRevise As String
+    
+    cheminOriginal = Application.GetOpenFilename( _
+        "Documents Word (*.docx;*.doc;*.docm),*.docx;*.doc;*.docm", _
+        , "Sélectionner le document ORIGINAL")
+    If cheminOriginal = "False" Then Exit Sub
+    
+    cheminRevise = Application.GetOpenFilename( _
+        "Documents Word (*.docx;*.doc;*.docm),*.docx;*.doc;*.docm", _
+        , "Sélectionner le document RÉVISÉ")
+    If cheminRevise = "False" Then Exit Sub
+    
+    Application.ScreenUpdating = False
+    
+    ' Ouvrir les deux documents
+    Dim docOriginal As Document
+    Dim docRevise As Document
+    Set docOriginal = Documents.Open(cheminOriginal, ReadOnly:=True, Visible:=False)
+    Set docRevise   = Documents.Open(cheminRevise,  ReadOnly:=True, Visible:=False)
+    
+    ' Créer le document de comparaison
+    Dim docComparaison As Document
+    Set docComparaison = Application.CompareDocuments( _
+        OriginalDocument:=docOriginal, _
+        RevisedDocument:=docRevise, _
+        Destination:=wdCompareDestinationNew, _
+        Granularity:=wdGranularityCharLevel, _
+        CompareFormatting:=True, _
+        CompareCaseChanges:=True, _
+        CompareWhitespace:=False, _
+        CompareTables:=True, _
+        CompareFields:=True, _
+        CompareFootnotes:=True, _
+        CompareTextboxes:=True, _
+        CompareHeaders:=True, _
+        CompareFooters:=True)
+    
+    ' Fermer les originaux
+    docOriginal.Close False
+    docRevise.Close False
+    
+    ' Rendre le document de comparaison visible
+    docComparaison.ActiveWindow.Visible = True
+    
+    Application.ScreenUpdating = True
+    
+    Dim nbRevisions As Integer : nbRevisions = docComparaison.Revisions.Count
+    MsgBox nbRevisions & " différence(s) détectée(s) entre les deux documents.", _
+           IIf(nbRevisions > 0, vbExclamation, vbInformation), "Comparaison terminée"
+End Sub`,tip:"<strong>Astuce :</strong> Le document de comparaison affiche les ajouts en bleu souligné et les suppressions en rouge barré. Vous pouvez l'enregistrer ou accepter/refuser les modifications une par une."},
+
+// ── AUTOMATISATION ──
+aut1:{t:"Traiter en batch tous les .docx d'un dossier",d:"Ouvre chaque fichier Word d'un dossier, effectue un traitement défini, et le sauvegarde.",c:`Sub TraiterDossierWord()
+    Dim dossier As String, fichier As String
+    Dim doc As Document
+    Dim n As Integer
+    
+    With Application.FileDialog(msoFileDialogFolderPicker)
+        .Title = "Dossier contenant les documents Word"
+        If .Show <> -1 Then Exit Sub
+        dossier = .SelectedItems(1) & "\"
+    End With
+    
+    Application.ScreenUpdating = False
+    Application.DisplayAlerts = False
+    
+    fichier = Dir(dossier & "*.docx")
+    
+    Do While fichier <> ""
+        Set doc = Documents.Open(dossier & fichier, Visible:=False)
+        doc.TrackRevisions = False
+        
+        ' ═══ DÉFINIR ICI VOTRE TRAITEMENT ═══
+        ' Exemple : Appliquer la charte graphique
+        Call AppliquerCharteDocument(doc)
+        ' Exemple : Remplacer du texte
+        Call RemplacerDansDoc(doc, "Ancienne Société", "Nouvelle Société")
+        ' Exemple : Accepter les révisions
+        If doc.Revisions.Count > 0 Then doc.Revisions.AcceptAll
+        ' ═══════════════════════════════════
+        
+        doc.Save
+        doc.Close False
+        n = n + 1
+        fichier = Dir()
+    Loop
+    
+    Application.DisplayAlerts = True
+    Application.ScreenUpdating = True
+    MsgBox n & " document(s) traité(s).", vbInformation
+End Sub
+
+Sub AppliquerCharteDocument(doc As Document)
+    ' Traitement simplifié de charte graphique
+    With doc.Styles(wdStyleNormal).Font
+        .Name = "Calibri"
+        .Size = 11
+    End With
+End Sub
+
+Sub RemplacerDansDoc(doc As Document, cherche As String, remplace As String)
+    With doc.Content.Find
+        .ClearFormatting : .Replacement.ClearFormatting
+        .Text = cherche : .Replacement.Text = remplace
+        .Forward = True : .Wrap = wdFindContinue
+        .Execute Replace:=wdReplaceAll
+    End With
+End Sub`,tip:"<strong>Astuce :</strong> Ajoutez vos traitements dans la zone délimitée par les commentaires <code>═══</code>. Testez toujours sur un dossier de copie avant de lancer sur vos vrais documents."},
+
+aut2:{t:"Convertir des documents Word en PDF en masse",d:"Convertit tous les fichiers .docx d'un dossier en PDF dans un sous-dossier de sortie.",c:`Sub ConvertirWordEnPDFMasse()
+    Dim dossier As String, fichier As String
+    Dim dossierPDF As String
+    Dim doc As Document
+    Dim n As Integer
+    
+    With Application.FileDialog(msoFileDialogFolderPicker)
+        .Title = "Dossier des fichiers Word à convertir"
+        If .Show <> -1 Then Exit Sub
+        dossier = .SelectedItems(1) & "\"
+    End With
+    
+    dossierPDF = dossier & "PDF\" 
+    If Dir(dossierPDF, vbDirectory) = "" Then MkDir dossierPDF
+    
+    Application.ScreenUpdating = False
+    Application.DisplayAlerts = False
+    
+    fichier = Dir(dossier & "*.docx")
+    
+    Do While fichier <> ""
+        Set doc = Documents.Open(dossier & fichier, ReadOnly:=True, Visible:=False)
+        
+        Dim nomPDF As String
+        nomPDF = dossierPDF & Left(fichier, Len(fichier) - 5) & ".pdf"
+        
+        doc.ExportAsFixedFormat _
+            OutputFileName:=nomPDF, _
+            ExportFormat:=wdExportFormatPDF, _
+            OpenAfterExport:=False, _
+            OptimizeFor:=wdExportOptimizeForPrint, _
+            Range:=wdExportAllDocument, _
+            Item:=wdExportDocumentContent, _
+            IncludeDocProps:=True, _
+            KeepIRM:=True, _
+            CreateBookmarks:=wdExportCreateHeadingBookmarks
+        
+        doc.Close False
+        n = n + 1
+        fichier = Dir()
+    Loop
+    
+    Application.DisplayAlerts = True
+    Application.ScreenUpdating = True
+    MsgBox n & " document(s) converti(s) en PDF dans : " & vbNewLine & dossierPDF, vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> <code>CreateBookmarks:=wdExportCreateHeadingBookmarks</code> crée des signets PDF à partir des titres Word, permettant la navigation dans le PDF final. Utile pour les longs documents."},
+
+aut3:{t:"Fusionner plusieurs documents Word en un seul",d:"Ouvre tous les .docx d'un dossier et les fusionne dans un seul document avec saut de page entre chacun.",c:`Sub FusionnerDocumentsWord()
+    Dim dossier As String, fichier As String
+    Dim docFusion As Document
+    Dim n As Integer
+    
+    With Application.FileDialog(msoFileDialogFolderPicker)
+        .Title = "Dossier des documents à fusionner"
+        If .Show <> -1 Then Exit Sub
+        dossier = .SelectedItems(1) & "\"
+    End With
+    
+    Application.ScreenUpdating = False
+    Application.DisplayAlerts = False
+    
+    ' Créer le document de fusion
+    Set docFusion = Documents.Add
+    docFusion.TrackRevisions = False
+    
+    fichier = Dir(dossier & "*.docx")
+    
+    Do While fichier <> ""
+        ' Aller à la fin du document de fusion
+        Dim rngFin As Range
+        Set rngFin = docFusion.Range( _
+            docFusion.Content.End - 1, _
+            docFusion.Content.End - 1)
+        
+        ' Insérer le contenu du fichier source
+        rngFin.InsertFile Filename:=dossier & fichier, _
+            Range:="", _
+            ConfirmConversions:=False, _
+            Link:=False, _
+            Attachment:=False
+        
+        ' Insérer un saut de page après (sauf pour le dernier)
+        Dim rngApres As Range
+        Set rngApres = docFusion.Range( _
+            docFusion.Content.End - 1, _
+            docFusion.Content.End - 1)
+        rngApres.InsertBreak Type:=wdPageBreak
+        
+        n = n + 1
+        fichier = Dir()
+    Loop
+    
+    ' Sauvegarder le document fusionné
+    Dim cheminFusion As String
+    cheminFusion = dossier & "FUSION_" & Format(Date, "YYYY-MM-DD") & ".docx"
+    docFusion.SaveAs2 Filename:=cheminFusion, FileFormat:=wdFormatXMLDocument
+    
+    Application.DisplayAlerts = True
+    Application.ScreenUpdating = True
+    MsgBox n & " document(s) fusionné(s) → " & Dir(cheminFusion), vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Pour un saut de section (plutôt que de page) entre les documents, remplacez <code>wdPageBreak</code> par <code>wdSectionBreakNextPage</code>. Cela permet d'avoir des en-têtes différents par section."},
+
+aut4:{t:"Extraire le texte de tous les documents",d:"Parcourt tous les .docx d'un dossier et extrait leur contenu texte dans un fichier de synthèse.",c:`Sub ExtraireTexteDocuments()
+    Dim dossier As String, fichier As String
+    Dim doc As Document
+    Dim contenuTotal As String
+    Dim n As Integer
+    
+    With Application.FileDialog(msoFileDialogFolderPicker)
+        .Title = "Dossier des documents à analyser"
+        If .Show <> -1 Then Exit Sub
+        dossier = .SelectedItems(1) & "\"
+    End With
+    
+    Application.ScreenUpdating = False
+    Application.DisplayAlerts = False
+    
+    ' Créer un fichier texte de sortie
+    Dim cheminTxt As String
+    cheminTxt = dossier & "Extraction_" & Format(Date, "YYYY-MM-DD") & ".txt"
+    
+    Dim fileNum As Integer : fileNum = FreeFile
+    Open cheminTxt For Output As #fileNum
+    
+    Print #fileNum, "EXTRACTION DE CONTENU — " & Format(Now, "dd/mm/yyyy hh:mm")
+    Print #fileNum, String(60, "=")
+    Print #fileNum, ""
+    
+    fichier = Dir(dossier & "*.docx")
+    
+    Do While fichier <> ""
+        Set doc = Documents.Open(dossier & fichier, ReadOnly:=True, Visible:=False)
+        
+        ' Écrire le séparateur et le nom du fichier
+        Print #fileNum, "DOCUMENT : " & fichier
+        Print #fileNum, "Auteur : " & doc.BuiltInDocumentProperties("Author").Value
+        Print #fileNum, "Modifié le : " & Format(doc.BuiltInDocumentProperties("Last Save Time").Value, "dd/mm/yyyy")
+        Print #fileNum, String(40, "-")
+        Print #fileNum, ""
+        
+        ' Extraire le texte paragraphe par paragraphe
+        Dim para As Paragraph
+        For Each para In doc.Paragraphs
+            Dim txtPara As String
+            txtPara = Trim(para.Range.Text)
+            If Len(txtPara) > 1 Then ' Ignorer les lignes vides
+                Print #fileNum, txtPara
+            End If
+        Next para
+        
+        Print #fileNum, ""
+        Print #fileNum, String(60, "=")
+        Print #fileNum, ""
+        
+        doc.Close False
+        n = n + 1
+        fichier = Dir()
+    Loop
+    
+    Close #fileNum
+    Application.DisplayAlerts = True
+    Application.ScreenUpdating = True
+    MsgBox n & " document(s) traité(s)." & vbNewLine & "Fichier : " & Dir(cheminTxt), vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Cette macro est utile pour analyser le contenu de nombreux documents (recherche de mots, audit de contenu). Le fichier .txt peut ensuite être analysé avec Excel ou d'autres outils."},
+
+aut5:{t:"Protéger ou déprotéger des documents",d:"Applique ou retire une protection en masse sur tous les .docx d'un dossier.",c:`Sub GererProtectionDocuments()
+    Dim dossier As String, fichier As String
+    Dim doc As Document
+    Dim n As Integer
+    
+    With Application.FileDialog(msoFileDialogFolderPicker)
+        .Title = "Dossier des documents à protéger"
+        If .Show <> -1 Then Exit Sub
+        dossier = .SelectedItems(1) & "\"
+    End With
+    
+    Dim choix As Integer
+    choix = MsgBox("OUI = PROTÉGER en lecture seule" & vbNewLine & "NON = DÉPROTÉGER", _
+                    vbYesNoCancel + vbQuestion, "Protection")
+    If choix = vbCancel Then Exit Sub
+    
+    Dim mdp As String
+    mdp = InputBox("Mot de passe (laisser vide = sans MDP) :", "Mot de passe")
+    
+    Application.ScreenUpdating = False
+    Application.DisplayAlerts = False
+    
+    fichier = Dir(dossier & "*.docx")
+    
+    Do While fichier <> ""
+        Set doc = Documents.Open(dossier & fichier, Visible:=False)
+        
+        On Error Resume Next
+        If choix = vbYes Then
+            ' Protéger en lecture seule
+            If mdp <> "" Then
+                doc.Protect Type:=wdAllowOnlyReading, Password:=mdp
+            Else
+                doc.Protect Type:=wdAllowOnlyReading
+            End If
+        Else
+            ' Déprotéger
+            If mdp <> "" Then
+                doc.Unprotect Password:=mdp
+            Else
+                doc.Unprotect
+            End If
+        End If
+        On Error GoTo 0
+        
+        doc.Save
+        doc.Close False
+        n = n + 1
+        fichier = Dir()
+    Loop
+    
+    Application.DisplayAlerts = True
+    Application.ScreenUpdating = True
+    
+    Dim action_txt As String
+    action_txt = IIf(choix = vbYes, "protégé(s)", "déprotégé(s)")
+    MsgBox n & " document(s) " & action_txt & ".", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> <code>wdAllowOnlyReading</code> = lecture seule. Autres options : <code>wdAllowOnlyComments</code> (commentaires uniquement), <code>wdAllowOnlyFormFields</code> (formulaires uniquement), <code>wdAllowOnlyRevisions</code> (révisions uniquement)."},
+
+// ── INTERFACE ──
+ui1:{t:"Créer un bouton dans la barre d'outils",d:"Ajoute un bouton personnalisé dans la barre d'outils Accès rapide pour lancer une macro.",c:`Sub AjouterBoutonBarreAccesRapide()
+    ' Note : L'ajout programmatique à la barre d'outils Accès rapide
+    ' est limité dans les versions récentes de Word.
+    ' La méthode recommandée est via l'interface utilisateur.
+    
+    MsgBox "Pour ajouter un bouton :" & vbNewLine & vbNewLine & _
+           "1. Fichier → Options" & vbNewLine & _
+           "2. Barre d'outils Accès rapide" & vbNewLine & _
+           "3. Dans 'Choisir les commandes' → 'Macros'" & vbNewLine & _
+           "4. Sélectionnez votre macro et cliquez 'Ajouter >>'", _
+           vbInformation, "Ajouter un bouton"
+End Sub
+
+' ── Alternative : Bouton dans le document (via champ) ──
+Sub InsererBoutonDansDocument()
+    Dim doc As Document : Set doc = ActiveDocument
+    
+    ' Insérer un contrôle de contenu bouton (Legacy)
+    ' ou un champ MacroButton
+    Dim rng As Range
+    Set rng = Selection.Range
+    
+    ' Insérer un champ MacroButton (cliquable dans le document)
+    doc.Fields.Add _
+        Range:=rng, _
+        Type:=wdFieldMacroButton, _
+        Text:="MACRO NomDeLaMacro ""▶ Cliquez pour exécuter""", _
+        PreserveFormatting:=False
+    
+    MsgBox "Bouton inséré dans le document. Double-cliquez dessus pour lancer la macro.", vbInformation
+End Sub
+
+' ── Raccourci clavier ──
+Sub AssignerRaccourciClavier()
+    ' Assigner Ctrl+Shift+M à une macro
+    Dim oKeyBind As KeyBinding
+    
+    ' Créer un raccourci : Ctrl+Shift+M → lance NomDeLaMacro
+    CustomizationContext = Normal  ' Dans Normal.dotm (pour tous les docs)
+    
+    KeyBindings.Add _
+        KeyCategory:=wdKeyCategoryMacro, _
+        Command:="NomDeLaMacro", _
+        KeyCode:=BuildKeyCode(wdKeyControl, wdKeyShift, wdKeyM)
+    
+    MsgBox "Raccourci Ctrl+Shift+M assigné à 'NomDeLaMacro'.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Le champ <code>MacroButton</code> est la façon la plus simple d'insérer un bouton cliquable directement dans le texte d'un document Word. Double-cliquez dessus pour déclencher la macro."},
+
+ui2:{t:"Formulaire de saisie guidé (UserForm)",d:"Crée un formulaire de saisie structuré pour remplir les informations d'un document de façon guidée.",c:`' ═══════════════════════════════════════════════════
+' ÉTAPE 1 : Alt+F11 → Insertion > UserForm
+' Ajoutez : TextBox (txtNom, txtSociete, txtDate)
+'            ComboBox (cboType)
+'            2 CommandButton (btnValider, btnFermer)
+' Puis collez ce code dans le module du UserForm
+' ═══════════════════════════════════════════════════
+Private Sub UserForm_Initialize()
+    Me.Caption = "Informations du document"
+    Me.Width = 320
+    
+    ' Remplir la liste déroulante
+    cboType.AddItem "Contrat"
+    cboType.AddItem "Rapport"
+    cboType.AddItem "Note de service"
+    cboType.AddItem "Compte-rendu"
+    cboType.Value = "Rapport"
+    
+    ' Valeurs par défaut
+    txtDate.Value = Format(Date, "dd/mm/yyyy")
+    txtNom.Value = Environ("USERNAME")
+End Sub
+
+Private Sub btnValider_Click()
+    ' Validation
+    If txtNom.Value = "" Then
+        MsgBox "Le champ Nom est obligatoire.", vbExclamation
+        txtNom.SetFocus : Exit Sub
+    End If
+    If txtSociete.Value = "" Then
+        MsgBox "Le champ Société est obligatoire.", vbExclamation
+        txtSociete.SetFocus : Exit Sub
+    End If
+    
+    ' Remplir les signets ou remplacer les balises dans le document
+    Dim doc As Document : Set doc = ActiveDocument
+    doc.TrackRevisions = False
+    
+    ' Remplir les signets si présents
+    If doc.Bookmarks.Exists("NomAuteur") Then
+        doc.Bookmarks("NomAuteur").Range.Text = txtNom.Value
+    End If
+    If doc.Bookmarks.Exists("NomSociete") Then
+        doc.Bookmarks("NomSociete").Range.Text = txtSociete.Value
+    End If
+    If doc.Bookmarks.Exists("DateDocument") Then
+        doc.Bookmarks("DateDocument").Range.Text = txtDate.Value
+    End If
+    If doc.Bookmarks.Exists("TypeDocument") Then
+        doc.Bookmarks("TypeDocument").Range.Text = cboType.Value
+    End If
+    
+    ' Remplacer aussi les balises texte
+    Call RemplaceTexte(doc, "[[NOM]]",    txtNom.Value)
+    Call RemplaceTexte(doc, "[[SOCIETE]]", txtSociete.Value)
+    Call RemplaceTexte(doc, "[[DATE]]",   txtDate.Value)
+    Call RemplaceTexte(doc, "[[TYPE]]",   cboType.Value)
+    
+    MsgBox "Document complété !", vbInformation
+    Unload Me
+End Sub
+
+Private Sub btnFermer_Click() : Unload Me : End Sub
+
+Sub RemplaceTexte(doc As Document, c As String, r As String)
+    With doc.Content.Find
+        .ClearFormatting : .Replacement.ClearFormatting
+        .Text=c : .Replacement.Text=r
+        .Wrap=wdFindContinue : .Execute Replace:=wdReplaceAll
+    End With
+End Sub
+
+' ═══════════════════════════════════════════════════
+' Dans un Module standard : pour ouvrir le formulaire
+' ═══════════════════════════════════════════════════
+Sub OuvrirFormulaireDocument()
+    FormInfosDocument.Show
+End Sub`,tip:"<strong>Astuce :</strong> Ce formulaire fonctionne aussi bien avec des signets Word qu'avec des balises texte [[...]]. Il est plus robuste d'utiliser les deux méthodes en parallèle."},
+
+ui3:{t:"Raccourcis clavier pour macros Word",d:"Assigne des raccourcis clavier personnalisés à vos macros Word les plus utilisées.",c:`Sub DefinirRaccourcisWord()
+    ' Assigner des raccourcis dans le contexte Normal.dotm
+    ' (disponibles dans tous les documents)
+    CustomizationContext = Normal
+    
+    ' Raccourci 1 : Ctrl+Shift+C → Appliquer charte graphique
+    KeyBindings.Add _
+        KeyCategory:=wdKeyCategoryMacro, _
+        Command:="AppliquerCharteGraphique", _
+        KeyCode:=BuildKeyCode(wdKeyControl, wdKeyShift, wdKeyC)
+    
+    ' Raccourci 2 : Ctrl+Shift+R → Rechercher/Remplacer en masse
+    KeyBindings.Add _
+        KeyCategory:=wdKeyCategoryMacro, _
+        Command:="RechercherRemplacerEnMasse", _
+        KeyCode:=BuildKeyCode(wdKeyControl, wdKeyShift, wdKeyR)
+    
+    ' Raccourci 3 : Ctrl+Shift+P → Exporter en PDF
+    KeyBindings.Add _
+        KeyCategory:=wdKeyCategoryMacro, _
+        Command:="ExporterDossierEnPDF", _
+        KeyCode:=BuildKeyCode(wdKeyControl, wdKeyShift, wdKeyP)
+    
+    ' Raccourci 4 : Ctrl+Shift+N → Nettoyer commentaires
+    KeyBindings.Add _
+        KeyCategory:=wdKeyCategoryMacro, _
+        Command:="SupprimerCommentaires", _
+        KeyCode:=BuildKeyCode(wdKeyControl, wdKeyShift, wdKeyN)
+    
+    MsgBox "Raccourcis activés :" & vbNewLine & _
+           "Ctrl+Shift+C → Charte graphique" & vbNewLine & _
+           "Ctrl+Shift+R → Rechercher/Remplacer" & vbNewLine & _
+           "Ctrl+Shift+P → Export PDF" & vbNewLine & _
+           "Ctrl+Shift+N → Nettoyer commentaires", vbInformation
+
+End Sub
+
+Sub SupprimerRaccourcisWord()
+    CustomizationContext = Normal
+    ' Supprimer les raccourcis
+    Dim key As KeyBinding
+    For Each key In KeyBindings
+        If key.KeyCategory = wdKeyCategoryMacro Then
+            key.Disable
+        End If
+    Next key
+    MsgBox "Raccourcis macros supprimés.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> <code>CustomizationContext = Normal</code> (Normal.dotm) rend les raccourcis disponibles dans tous les documents. Utilisez <code>CustomizationContext = ActiveDocument</code> pour les limiter au document courant."},
+
+ui4:{t:"Afficher une barre de progression",d:"Utilise la barre de statut de Word pour afficher la progression d'un traitement long.",c:`Sub ExempleAvecProgression()
+    Dim doc As Document : Set doc = ActiveDocument
+    Dim totalParas As Long : totalParas = doc.Paragraphs.Count
+    Dim i As Long, n As Integer
+    
+    Application.ScreenUpdating = False
+    
+    ' Afficher la barre de progression
+    Application.StatusBar = "Démarrage du traitement..."
+    
+    For i = 1 To totalParas
+        ' Calculer le pourcentage
+        Dim pct As Integer : pct = Int((i / totalParas) * 100)
+        
+        ' Mettre à jour la barre de statut tous les 10 paragraphes
+        If i Mod 10 = 0 Then
+            Application.StatusBar = "Traitement : " & pct & "% (" & i & "/" & totalParas & " paragraphes)"
+        End If
+        
+        ' ═══ VOTRE TRAITEMENT ICI ═══
+        Dim para As Paragraph : Set para = doc.Paragraphs(i)
+        ' Exemple : harmoniser les polices
+        If para.Style.NameLocal = "Normal" Then
+            para.Range.Font.Name = "Calibri"
+            n = n + 1
+        End If
+        ' ════════════════════════════
+    Next i
+    
+    ' Remettre la barre de statut normale
+    Application.StatusBar = False
+    Application.ScreenUpdating = True
+    
+    MsgBox n & " paragraphe(s) traité(s) sur " & totalParas & ".", vbInformation
+End Sub
+
+' ── Version avec boîte de dialogue de progression ──
+Sub MontrerProgressionBoite()
+    Dim total As Integer : total = 100
+    Dim i As Integer
+    
+    For i = 1 To total
+        Application.StatusBar = "Progression : " & String(i \ 5, Chr(9608)) & " " & i & "%"
+        Application.Wait Now + TimeValue("00:00:00") ' Simuler du travail
+        If i Mod 20 = 0 Then DoEvents ' Permettre l'annulation
+    Next i
+    
+    Application.StatusBar = False
+    MsgBox "Traitement terminé !", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> <code>DoEvents</code> dans la boucle permet à Windows de traiter les événements (comme un clic sur Annuler). Sans cela, Word semble figé pendant le traitement."},
+
+ui5:{t:"Créer un menu personnalisé dans le ruban",d:"Ajoute un groupe personnalisé dans un onglet Word existant via la personnalisation XML du ruban.",c:`' ═══════════════════════════════════════════════════
+' La personnalisation du ruban Word se fait via XML.
+' Ce code génère le fichier XML nécessaire.
+' ═══════════════════════════════════════════════════
+
+Sub GenererXMLRubanPersonnalise()
+    Dim xml As String
+    xml = "<?xml version=""1.0"" encoding=""UTF-8""?>" & vbNewLine
+    xml = xml & "<customUI xmlns=""http://schemas.microsoft.com/office/2009/07/customui"">" & vbNewLine
+    xml = xml & "  <ribbon>" & vbNewLine
+    xml = xml & "    <tabs>" & vbNewLine
+    xml = xml & "      <tab idMso=""TabHome"">" & vbNewLine
+    xml = xml & "        <group id=""grpMacrosGestionnaire"" label=""Mes Macros"">" & vbNewLine
+    xml = xml & "          <button id=""btnCharte"" label=""Charte"" imageMso=""StylesPane"" size=""normal"" onAction=""AppliquerCharteGraphique""/>" & vbNewLine
+    xml = xml & "          <button id=""btnPDF"" label=""Export PDF"" imageMso=""FileSaveAsPdfOrXps"" size=""normal"" onAction=""ExporterDossierEnPDF""/>" & vbNewLine
+    xml = xml & "          <button id=""btnNettoyer"" label=""Nettoyer"" imageMso=""ReviewDeleteAllMarkup"" size=""normal"" onAction=""SupprimerCommentaires""/>" & vbNewLine
+    xml = xml & "          <button id=""btnVerif"" label=""Vérifier"" imageMso=""SpellingAndGrammar"" size=""normal"" onAction=""VerifierMentionsObligatoires""/>" & vbNewLine
+    xml = xml & "        </group>" & vbNewLine
+    xml = xml & "      </tab>" & vbNewLine
+    xml = xml & "    </tabs>" & vbNewLine
+    xml = xml & "  </ribbon>" & vbNewLine
+    xml = xml & "</customUI>"
+    
+    ' Sauvegarder le XML
+    Dim chemin As String
+    chemin = Environ("TEMP") & "\customUI.xml"
+    Dim fileNum As Integer : fileNum = FreeFile
+    Open chemin For Output As #fileNum
+    Print #fileNum, xml
+    Close #fileNum
+    
+    MsgBox "Fichier XML généré : " & chemin & vbNewLine & vbNewLine & _
+           "Pour l'utiliser :" & vbNewLine & _
+           "1. Renommez votre .docm en .zip" & vbNewLine & _
+           "2. Créez un dossier 'customUI'" & vbNewLine & _
+           "3. Copiez ce XML dedans" & vbNewLine & _
+           "4. Modifiez [Content_Types].xml" & vbNewLine & _
+           "5. Renommez en .docm", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> La personnalisation du ruban Word passe par le XML embarqué dans le fichier .docm. L'outil gratuit <strong>Office RibbonX Editor</strong> simplifie grandement cette opération."},
+
+// ── MULTI-DOCUMENTS ──
+mf1:{t:"Ouvrir, modifier et fermer des documents en lot",d:"Ouvre chaque document d'un dossier, applique une modification définie et le sauvegarde.",c:`Sub ModifierDocumentsEnLot()
+    Dim dossier As String, fichier As String, doc As Document, n As Integer
+    With Application.FileDialog(msoFileDialogFolderPicker)
+        .Title = "Dossier des documents à modifier"
+        If .Show <> -1 Then Exit Sub
+        dossier = .SelectedItems(1) & "\"
+    End With
+    Application.ScreenUpdating = False
+    Application.DisplayAlerts = False
+    fichier = Dir(dossier & "*.doc*")
+    Do While fichier <> ""
+        If Right(fichier,3) = "doc" Or Right(fichier,4) = "docx" Or Right(fichier,4) = "docm" Then
+            Set doc = Documents.Open(dossier & fichier, Visible:=False)
+            doc.TrackRevisions = False
+            ' ═══ VOTRE MODIFICATION ═══
+            ' Exemple : remplacer du texte
+            With doc.Content.Find
+                .ClearFormatting : .Replacement.ClearFormatting
+                .Text = "Version 1.0" : .Replacement.Text = "Version 2.0"
+                .Wrap = wdFindContinue
+                .Execute Replace:=wdReplaceAll
+            End With
+            ' ═════════════════════════
+            doc.Save
+            doc.Close False
+            n = n + 1
+        End If
+        fichier = Dir()
+    Loop
+    Application.DisplayAlerts = True
+    Application.ScreenUpdating = True
+    MsgBox n & " document(s) modifié(s).", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Ajoutez <code>If doc.ReadOnly Then doc.Close False : GoTo Suite</code> pour ignorer les fichiers en lecture seule et éviter les erreurs de sauvegarde."},
+
+mf2:{t:"Rechercher/Remplacer dans tous les documents d'un dossier",d:"Effectue une recherche/remplacement globale dans tous les fichiers Word d'un dossier.",c:`Sub RechercherDansDossier()
+    Dim dossier As String, fichier As String, doc As Document
+    Dim cherche As String, remplace As String
+    Dim nbFichiers As Integer, nbRempla As Long
+    
+    cherche  = InputBox("Texte à rechercher :", "Recherche globale")
+    If cherche = "" Then Exit Sub
+    remplace = InputBox("Remplacer par :", "Remplacement", cherche)
+    
+    With Application.FileDialog(msoFileDialogFolderPicker)
+        .Title = "Dossier des documents"
+        If .Show <> -1 Then Exit Sub
+        dossier = .SelectedItems(1) & "\"
+    End With
+    
+    If MsgBox("Rechercher '" & cherche & "' et remplacer par '" & remplace & "' dans tous les .docx de " & dossier & " ?", _
+              vbYesNo + vbQuestion) = vbNo Then Exit Sub
+    
+    Application.ScreenUpdating = False
+    Application.DisplayAlerts = False
+    fichier = Dir(dossier & "*.docx")
+    
+    Do While fichier <> ""
+        Set doc = Documents.Open(dossier & fichier, Visible:=False)
+        doc.TrackRevisions = False
+        Dim avant As Long : avant = 0
+        ' Compter d'abord
+        With doc.Content.Find
+            .ClearFormatting : .Text = cherche
+            .Forward = True : .Wrap = wdFindStop : .MatchCase = False
+            Do While .Execute : avant = avant + 1 : Loop
+        End With
+        ' Remplacer
+        If avant > 0 Then
+            With doc.Content.Find
+                .ClearFormatting : .Replacement.ClearFormatting
+                .Text = cherche : .Replacement.Text = remplace
+                .Wrap = wdFindContinue : .MatchCase = False
+                .Execute Replace:=wdReplaceAll
+            End With
+            doc.Save
+            nbRempla = nbRempla + avant
+        End If
+        doc.Close False
+        nbFichiers = nbFichiers + 1
+        fichier = Dir()
+    Loop
+    
+    Application.DisplayAlerts = True : Application.ScreenUpdating = True
+    MsgBox nbRempla & " remplacement(s) dans " & nbFichiers & " fichier(s).", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Pour une recherche sensible à la casse, changez <code>MatchCase = False</code> en <code>True</code>. Pour une recherche de mot entier, ajoutez <code>.MatchWholeWord = True</code>."},
+
+mf3:{t:"Renommer des fichiers Word selon des règles",d:"Renomme des fichiers .docx selon une table de correspondance définie dans Word ou saisie interactivement.",c:`Sub RenommerFichiersWord()
+    Dim dossier As String, fichier As String
+    Dim ancienNom As String, nouveauNom As String
+    Dim nbOK As Integer, nbErr As Integer
+    
+    With Application.FileDialog(msoFileDialogFolderPicker)
+        .Title = "Dossier des fichiers à renommer"
+        If .Show <> -1 Then Exit Sub
+        dossier = .SelectedItems(1) & "\"
+    End With
+    
+    Application.ScreenUpdating = False
+    Application.DisplayAlerts = False
+    
+    ' Lire les règles depuis le tableau dans ce document (col 1 = ancien, col 2 = nouveau)
+    If ActiveDocument.Tables.Count = 0 Then
+        MsgBox "Créez un tableau dans ce document avec :" & vbNewLine & _
+               "Colonne 1 = Ancien nom | Colonne 2 = Nouveau nom", vbExclamation
+        Exit Sub
+    End If
+    
+    Dim tbl As Table : Set tbl = ActiveDocument.Tables(1)
+    
+    Dim i As Integer
+    For i = 2 To tbl.Rows.Count ' Ignorer l'en-tête
+        ancienNom = Trim(tbl.Cell(i,1).Range.Text)
+        nouveauNom = Trim(tbl.Cell(i,2).Range.Text)
+        ' Nettoyer les caractères Word
+        ancienNom = Replace(Replace(ancienNom, Chr(13),""), Chr(7),"")
+        nouveauNom = Replace(Replace(nouveauNom, Chr(13),""), Chr(7),"")
+        
+        If ancienNom <> "" And nouveauNom <> "" Then
+            If Dir(dossier & ancienNom) <> "" Then
+                On Error Resume Next
+                Name dossier & ancienNom As dossier & nouveauNom
+                If Err.Number = 0 Then
+                    tbl.Cell(i,3).Range.Text = "✓ OK"
+                    nbOK = nbOK + 1
+                Else
+                    tbl.Cell(i,3).Range.Text = "Erreur"
+                    nbErr = nbErr + 1 : Err.Clear
+                End If
+                On Error GoTo 0
+            Else
+                tbl.Cell(i,3).Range.Text = "Introuvable"
+                nbErr = nbErr + 1
+            End If
+        End If
+    Next i
+    
+    Application.DisplayAlerts = True : Application.ScreenUpdating = True
+    MsgBox nbOK & " renommé(s), " & nbErr & " erreur(s).", IIf(nbErr>0,vbExclamation,vbInformation)
+End Sub`,tip:"<strong>Astuce :</strong> Créez dans ce document un tableau avec en-têtes : Ancien nom | Nouveau nom | Résultat. La macro lit la table, effectue les renommages et écrit le résultat dans la colonne 3."},
+
+mf4:{t:"Extraire les métadonnées de plusieurs documents",d:"Lit les propriétés (auteur, titre, date, mots) de tous les documents d'un dossier et les compile dans un rapport.",c:`Sub ExtraireMetadonnees()
+    Dim dossier As String, fichier As String, doc As Document
+    Dim cheminRapport As String
+    
+    With Application.FileDialog(msoFileDialogFolderPicker)
+        .Title = "Dossier des documents à analyser"
+        If .Show <> -1 Then Exit Sub
+        dossier = .SelectedItems(1) & "\"
+    End With
+    
+    ' Créer un document rapport
+    Dim docRapport As Document : Set docRapport = Documents.Add
+    docRapport.TrackRevisions = False
+    
+    ' En-tête du rapport
+    docRapport.Content.InsertAfter "RAPPORT DE MÉTADONNÉES" & Chr(13)
+    docRapport.Paragraphs(1).Style = docRapport.Styles(wdStyleHeading1)
+    docRapport.Content.InsertAfter "Généré le " & Format(Now,"dd/mm/yyyy hh:mm") & Chr(13) & Chr(13)
+    
+    ' Créer un tableau de synthèse
+    Dim tbl As Table
+    Set tbl = docRapport.Tables.Add( _
+        docRapport.Paragraphs(docRapport.Paragraphs.Count).Range, 1, 6)
+    tbl.Rows(1).Range.Font.Bold = True
+    tbl.Rows(1).Range.Shading.BackgroundPatternColor = RGB(31,73,125)
+    tbl.Rows(1).Range.Font.Color = RGB(255,255,255)
+    tbl.Cell(1,1).Range.Text = "Fichier"
+    tbl.Cell(1,2).Range.Text = "Titre"
+    tbl.Cell(1,3).Range.Text = "Auteur"
+    tbl.Cell(1,4).Range.Text = "Date création"
+    tbl.Cell(1,5).Range.Text = "Dernière modif."
+    tbl.Cell(1,6).Range.Text = "Nb mots"
+    
+    Application.ScreenUpdating = False
+    Application.DisplayAlerts = False
+    Dim n As Integer
+    fichier = Dir(dossier & "*.docx")
+    
+    Do While fichier <> ""
+        Set doc = Documents.Open(dossier & fichier, ReadOnly:=True, Visible:=False)
+        tbl.Rows.Add
+        Dim lr As Integer : lr = tbl.Rows.Count
+        On Error Resume Next
+        tbl.Cell(lr,1).Range.Text = fichier
+        tbl.Cell(lr,2).Range.Text = CStr(doc.BuiltInDocumentProperties("Title").Value)
+        tbl.Cell(lr,3).Range.Text = CStr(doc.BuiltInDocumentProperties("Author").Value)
+        tbl.Cell(lr,4).Range.Text = Format(doc.BuiltInDocumentProperties("Creation Date").Value,"dd/mm/yyyy")
+        tbl.Cell(lr,5).Range.Text = Format(doc.BuiltInDocumentProperties("Last Save Time").Value,"dd/mm/yyyy")
+        tbl.Cell(lr,6).Range.Text = CStr(doc.Words.Count)
+        On Error GoTo 0
+        doc.Close False : n = n + 1 : fichier = Dir()
+    Loop
+    
+    tbl.AutoFitBehavior wdAutoFitContent
+    cheminRapport = dossier & "Metadonnees_" & Format(Date,"YYYY-MM-DD") & ".docx"
+    docRapport.SaveAs2 cheminRapport, wdFormatXMLDocument
+    Application.DisplayAlerts = True : Application.ScreenUpdating = True
+    MsgBox n & " document(s) analysés → " & Dir(cheminRapport), vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Les propriétés disponibles incluent : Title, Author, Subject, Keywords, Comments, Creation Date, Last Save Time, Number of Words, Number of Pages, etc."},
+
+mf5:{t:"Rapport de synthèse sur un ensemble de documents",d:"Génère un rapport consolidé sur le contenu et la structure d'un ensemble de documents Word.",c:`Sub GenererRapportSynthese()
+    Dim dossier As String, fichier As String, doc As Document
+    Dim totalMots As Long, totalPages As Long, n As Integer
+    
+    With Application.FileDialog(msoFileDialogFolderPicker)
+        .Title = "Dossier des documents à analyser"
+        If .Show <> -1 Then Exit Sub
+        dossier = .SelectedItems(1) & "\"
+    End With
+    
+    Application.ScreenUpdating = False : Application.DisplayAlerts = False
+    
+    ' Créer le rapport
+    Dim docR As Document : Set docR = Documents.Add
+    docR.Content.InsertAfter "RAPPORT DE SYNTHÈSE DOCUMENTAIRE" & Chr(13)
+    docR.Paragraphs(1).Style = docR.Styles(wdStyleHeading1)
+    docR.Content.InsertAfter "Dossier : " & dossier & Chr(13)
+    docR.Content.InsertAfter "Date d'analyse : " & Format(Now,"dd/mm/yyyy hh:mm") & Chr(13) & Chr(13)
+    
+    Dim lignes As String
+    fichier = Dir(dossier & "*.docx")
+    
+    Do While fichier <> ""
+        Set doc = Documents.Open(dossier & fichier, ReadOnly:=True, Visible:=False)
+        
+        Dim nbMots As Long : nbMots = doc.Words.Count
+        Dim nbPages As Long
+        On Error Resume Next
+        nbPages = doc.BuiltInDocumentProperties("Number of Pages").Value
+        On Error GoTo 0
+        
+        totalMots = totalMots + nbMots
+        totalPages = totalPages + nbPages
+        n = n + 1
+        
+        ' Résumé du document
+        lignes = lignes & "• " & fichier & Chr(13)
+        lignes = lignes & "   Pages : " & nbPages & " | Mots : " & nbMots & Chr(13)
+        lignes = lignes & "   Auteur : " & CStr(doc.BuiltInDocumentProperties("Author").Value) & Chr(13) & Chr(13)
+        
+        doc.Close False : fichier = Dir()
+    Loop
+    
+    ' Ajouter la synthèse
+    docR.Content.InsertAfter "RÉSUMÉ GLOBAL" & Chr(13)
+    docR.Paragraphs(docR.Paragraphs.Count - 1).Style = docR.Styles(wdStyleHeading2)
+    docR.Content.InsertAfter "Nombre de documents : " & n & Chr(13)
+    docR.Content.InsertAfter "Total des pages : " & totalPages & Chr(13)
+    docR.Content.InsertAfter "Total des mots : " & totalMots & Chr(13) & Chr(13)
+    docR.Content.InsertAfter "DÉTAIL PAR DOCUMENT" & Chr(13)
+    docR.Paragraphs(docR.Paragraphs.Count - 1).Style = docR.Styles(wdStyleHeading2)
+    docR.Content.InsertAfter lignes
+    
+    Dim cheminR As String : cheminR = dossier & "Synthese_" & Format(Date,"YYYY-MM-DD") & ".docx"
+    docR.SaveAs2 cheminR, wdFormatXMLDocument
+    Application.DisplayAlerts = True : Application.ScreenUpdating = True
+    MsgBox n & " document(s) analysés → " & Dir(cheminR), vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Enrichissez ce rapport en ajoutant l'extraction des titres de niveau 1 (<code>For Each para In doc.Paragraphs : If para.Style = wdStyleHeading1</code>) pour créer une table des matières inter-documents."},
+
+// ── INTEROPÉRABILITÉ ──
+off1:{t:"Importer un tableau Excel dans Word",d:"Copie un tableau depuis Excel et l'insère dans le document Word actif avec mise en forme.",c:`Sub ImporterTableauExcel()
+    Dim xlApp As Object, xlWb As Object, xlWs As Object
+    Dim chemin As String
+    
+    chemin = Application.GetOpenFilename( _
+        "Fichiers Excel (*.xlsx;*.xlsm),*.xlsx;*.xlsm", _
+        , "Sélectionner le fichier Excel")
+    If chemin = "False" Then Exit Sub
+    
+    Set xlApp = CreateObject("Excel.Application")
+    xlApp.Visible = False
+    Set xlWb = xlApp.Workbooks.Open(chemin, ReadOnly:=True)
+    Set xlWs = xlWb.Sheets(1)
+    
+    Dim lastRow As Long : lastRow = xlWs.Cells(xlWs.Rows.Count,"A").End(-4162).Row
+    Dim lastCol As Integer : lastCol = xlWs.Cells(1,xlWs.Columns.Count).End(-4159).Column
+    
+    ' Insérer le tableau dans Word
+    Dim doc As Document : Set doc = ActiveDocument
+    doc.TrackRevisions = False
+    
+    Dim tbl As Table
+    Set tbl = doc.Tables.Add( _
+        Range:=Selection.Range, _
+        NumRows:=lastRow, _
+        NumColumns:=lastCol, _
+        DefaultTableBehavior:=wdWord9TableBehavior, _
+        AutoFitBehavior:=wdAutoFitFixed)
+    
+    ' Remplir les données
+    Dim i As Long, j As Integer
+    For i = 1 To lastRow
+        For j = 1 To lastCol
+            tbl.Cell(i,j).Range.Text = CStr(xlWs.Cells(i,j).Value)
+            If i = 1 Then
+                tbl.Cell(i,j).Range.Font.Bold = True
+                tbl.Cell(i,j).Range.Shading.BackgroundPatternColor = RGB(31,73,125)
+                tbl.Cell(i,j).Range.Font.Color = RGB(255,255,255)
+            ElseIf i Mod 2 = 0 Then
+                tbl.Cell(i,j).Range.Shading.BackgroundPatternColor = RGB(242,242,242)
+            End If
+        Next j
+    Next i
+    
+    ' Bordures
+    With tbl.Borders
+        .InsideLineStyle = wdLineStyleSingle
+        .OutsideLineStyle = wdLineStyleSingle
+    End With
+    tbl.AutoFitBehavior wdAutoFitContent
+    
+    xlWb.Close False : xlApp.Quit
+    MsgBox "Tableau importé : " & lastRow & " lignes × " & lastCol & " colonnes.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Pour lier le tableau (mise à jour automatique quand Excel change), utilisez la méthode <code>doc.InlineShapes.AddOLEObject</code> plutôt que de copier les valeurs manuellement."},
+
+off2:{t:"Envoyer un document Word par e-mail",d:"Envoie le document Word actif par e-mail via Outlook avec destinataire, objet et corps personnalisés.",c:`Sub EnvoyerDocumentParEmail()
+    ' Nécessite : Outils > Références > Microsoft Outlook Object Library
+    Dim OutApp As Object, OutMail As Object
+    Dim doc As Document : Set doc = ActiveDocument
+    
+    ' Vérifier que le document est sauvegardé
+    If doc.Path = "" Then
+        MsgBox "Enregistrez d'abord le document.", vbExclamation : Exit Sub
+    End If
+    doc.Save
+    
+    Dim destinataire As String
+    destinataire = InputBox("Adresse e-mail du destinataire :", "Envoi document")
+    If destinataire = "" Then Exit Sub
+    
+    Set OutApp = CreateObject("Outlook.Application")
+    Set OutMail = OutApp.CreateItem(0)
+    
+    With OutMail
+        .To = destinataire
+        .Subject = "Document : " & doc.Name & " — " & Format(Date, "dd/mm/yyyy")
+        .HTMLBody = "<p>Bonjour,</p>" & _
+            "<p>Veuillez trouver ci-joint le document <b>" & doc.Name & "</b>.</p>" & _
+            "<p>Ce document a été envoyé automatiquement depuis Word.</p>" & _
+            "<p>Cordialement</p>"
+        .Attachments.Add doc.FullName
+        .Display ' Remplacer par .Send pour envoi direct
+    End With
+    
+    Set OutMail = Nothing : Set OutApp = Nothing
+End Sub
+
+' ── Version : envoyer comme PDF ──
+Sub EnvoyerDocumentCommePDF()
+    Dim OutApp As Object, OutMail As Object
+    Dim doc As Document : Set doc = ActiveDocument
+    
+    ' Créer le PDF temporaire
+    Dim cheminPDF As String
+    cheminPDF = Environ("TEMP") & "\" & Left(doc.Name, Len(doc.Name)-5) & ".pdf"
+    doc.ExportAsFixedFormat cheminPDF, wdExportFormatPDF
+    
+    Dim destinataire As String
+    destinataire = InputBox("Adresse e-mail :", "Envoi PDF")
+    If destinataire = "" Then Kill cheminPDF : Exit Sub
+    
+    Set OutApp = CreateObject("Outlook.Application")
+    Set OutMail = OutApp.CreateItem(0)
+    With OutMail
+        .To = destinataire
+        .Subject = "Document PDF : " & Left(doc.Name,Len(doc.Name)-5)
+        .Body = "Bonjour," & vbNewLine & vbNewLine & "Veuillez trouver ci-joint le document en PDF." & vbNewLine & vbNewLine & "Cordialement"
+        .Attachments.Add cheminPDF
+        .Display
+    End With
+    Set OutMail = Nothing : Set OutApp = Nothing
+End Sub`,tip:"<strong>Astuce :</strong> La version 'Envoyer comme PDF' convertit d'abord le document en PDF temporaire avant de l'attacher à l'e-mail. Le PDF est créé dans le dossier TEMP et est automatiquement joint."},
+
+off3:{t:"Créer des diapositives PowerPoint depuis Word",d:"Lit les titres Titre 1 du document Word et crée une présentation PowerPoint avec une diapo par titre.",c:`Sub CreerPresentationDepuisWord()
+    ' Nécessite : Outils > Références > Microsoft PowerPoint Object Library
+    Dim pptApp As Object, pptPres As Object, pptSlide As Object
+    Dim doc As Document : Set doc = ActiveDocument
+    Dim chemin As String
+    
+    chemin = doc.Path & "\Presentation_" & Format(Date,"YYYY-MM-DD") & ".pptx"
+    
+    Set pptApp = CreateObject("PowerPoint.Application")
+    pptApp.Visible = True
+    Set pptPres = pptApp.Presentations.Add
+    
+    ' Diapo de titre
+    Set pptSlide = pptPres.Slides.Add(1, 1)
+    pptSlide.Shapes.Title.TextFrame.TextRange.Text = doc.BuiltInDocumentProperties("Title").Value
+    If pptSlide.Shapes.Count > 1 Then
+        pptSlide.Shapes(2).TextFrame.TextRange.Text = _
+            "Généré depuis Word le " & Format(Date,"dd/mm/yyyy")
+    End If
+    
+    ' Parcourir les titres du document
+    Dim para As Paragraph
+    Dim numSlide As Integer : numSlide = 2
+    
+    For Each para In doc.Paragraphs
+        Select Case para.Style.NameLocal
+            Case "Titre 1", "Heading 1"
+                ' Nouvelle diapo pour chaque Titre 1
+                Set pptSlide = pptPres.Slides.Add(numSlide, 1)
+                Dim txtTitre As String
+                txtTitre = Trim(para.Range.Text)
+                txtTitre = Replace(txtTitre, Chr(13),"")
+                pptSlide.Shapes.Title.TextFrame.TextRange.Text = txtTitre
+                numSlide = numSlide + 1
+                
+            Case "Titre 2", "Heading 2"
+                ' Ajouter en sous-titre de la diapo courante
+                If numSlide > 2 Then
+                    Dim slideActuelle As Object
+                    Set slideActuelle = pptPres.Slides(numSlide - 1)
+                    If slideActuelle.Shapes.Count > 1 Then
+                        Dim txtActuel As String
+                        txtActuel = slideActuelle.Shapes(2).TextFrame.TextRange.Text
+                        If txtActuel <> "" Then txtActuel = txtActuel & Chr(13)
+                        Dim txtT2 As String : txtT2 = Trim(para.Range.Text)
+                        txtT2 = Replace(txtT2, Chr(13),"")
+                        slideActuelle.Shapes(2).TextFrame.TextRange.Text = txtActuel & "• " & txtT2
+                    End If
+                End If
+        End Select
+    Next para
+    
+    pptPres.SaveAs chemin
+    MsgBox numSlide - 1 & " diapositive(s) créée(s).", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> La qualité de la présentation dépend de la bonne utilisation des styles Titre 1/2 dans Word. Sans styles de titres, la macro ne peut pas identifier la structure du document."},
+
+off4:{t:"Lire des données Excel pour remplir Word",d:"Lit des données spécifiques depuis une feuille Excel et les injecte dans des signets ou balises du document Word actif.",c:`Sub RemplirWordDepuisExcel()
+    Dim xlApp As Object, xlWb As Object, xlWs As Object
+    Dim chemin As String
+    
+    chemin = Application.GetOpenFilename( _
+        "Fichiers Excel (*.xlsx;*.xlsm),*.xlsx;*.xlsm", _
+        , "Sélectionner le fichier de données Excel")
+    If chemin = "False" Then Exit Sub
+    
+    Set xlApp = CreateObject("Excel.Application")
+    xlApp.Visible = False
+    Set xlWb = xlApp.Workbooks.Open(chemin, ReadOnly:=True)
+    Set xlWs = xlWb.Sheets(1)
+    
+    ' Structure attendue : Col A = Clé, Col B = Valeur
+    ' Ex : A1="NOM_CLIENT", B1="Société Durand"
+    '      A2="MONTANT",    B2="15 000 €"
+    
+    Dim lastRow As Long
+    lastRow = xlWs.Cells(xlWs.Rows.Count,"A").End(-4162).Row
+    
+    Dim doc As Document : Set doc = ActiveDocument
+    doc.TrackRevisions = False
+    
+    Dim nSignets As Integer, nBalises As Integer
+    
+    Dim i As Long
+    For i = 1 To lastRow
+        Dim cle As String   : cle   = Trim(CStr(xlWs.Cells(i,1).Value))
+        Dim valeur As String : valeur = Trim(CStr(xlWs.Cells(i,2).Value))
+        
+        If cle = "" Then GoTo SuiteLigne
+        
+        ' Remplir le signet si présent
+        If doc.Bookmarks.Exists(cle) Then
+            Dim rng As Range : Set rng = doc.Bookmarks(cle).Range
+            rng.Text = valeur
+            doc.Bookmarks.Add Name:=cle, Range:=rng
+            nSignets = nSignets + 1
+        End If
+        
+        ' Remplacer aussi la balise [[CLE]]
+        With doc.Content.Find
+            .ClearFormatting : .Replacement.ClearFormatting
+            .Text = "[[" & cle & "]]"
+            .Replacement.Text = valeur
+            .Wrap = wdFindContinue
+            .Execute Replace:=wdReplaceAll
+        End With
+        nBalises = nBalises + 1
+        
+        SuiteLigne:
+    Next i
+    
+    xlWb.Close False : xlApp.Quit
+    MsgBox "Remplissage terminé :" & vbNewLine & _
+           "- " & nSignets & " signet(s) rempli(s)" & vbNewLine & _
+           "- " & nBalises & " balise(s) traitée(s)", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Ce pattern clé/valeur est très flexible : une seule macro gère tous les types de documents en lisant la liste de correspondances depuis Excel, sans modification du code."},
+
+off5:{t:"Synchroniser les styles entre documents",d:"Copie les styles personnalisés d'un document source vers tous les documents d'un dossier.",c:`Sub SynchroniserStyles()
+    Dim cheminSource As String, dossierCible As String
+    Dim docSource As Document, docCible As Document
+    Dim fichier As String, n As Integer
+    
+    cheminSource = Application.GetOpenFilename( _
+        "Documents Word (*.docx;*.dotx),*.docx;*.dotx", _
+        , "Document SOURCE (contenant les styles de référence)")
+    If cheminSource = "False" Then Exit Sub
+    
+    With Application.FileDialog(msoFileDialogFolderPicker)
+        .Title = "Dossier des documents CIBLES"
+        If .Show <> -1 Then Exit Sub
+        dossierCible = .SelectedItems(1) & "\"
+    End With
+    
+    Set docSource = Documents.Open(cheminSource, ReadOnly:=True, Visible:=False)
+    
+    Application.ScreenUpdating = False
+    Application.DisplayAlerts = False
+    fichier = Dir(dossierCible & "*.docx")
+    
+    Do While fichier <> ""
+        If dossierCible & fichier <> cheminSource Then
+            Set docCible = Documents.Open(dossierCible & fichier, Visible:=False)
+            
+            ' Copier chaque style personnalisé
+            Dim sty As Style
+            For Each sty In docSource.Styles
+                If sty.BuiltIn = False Then ' Styles personnalisés uniquement
+                    On Error Resume Next
+                    ' Copier via organizer
+                    Application.OrganizerCopy _
+                        Source:=docSource.Name, _
+                        Destination:=docCible.Name, _
+                        Name:=sty.NameLocal, _
+                        Object:=wdOrganizerObjectStyles
+                    On Error GoTo 0
+                End If
+            Next sty
+            
+            docCible.Save
+            docCible.Close False
+            n = n + 1
+        End If
+        fichier = Dir()
+    Loop
+    
+    docSource.Close False
+    Application.DisplayAlerts = True : Application.ScreenUpdating = True
+    MsgBox "Styles synchronisés dans " & n & " document(s).", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> <code>Application.OrganizerCopy</code> est la méthode native de Word pour copier styles, macros, barres d'outils et entrées de correction automatique entre documents. Elle est plus fiable que de recréer les styles manuellement."},
+
+// ── SIGNETS ──
+sig1:{t:"Insérer et remplir des signets automatiquement",d:"Insère des signets à des positions prédéfinies dans le document et les remplit avec des valeurs.",c:`Sub GererSignets()
+    Dim doc As Document : Set doc = ActiveDocument
+    doc.TrackRevisions = False
+    
+    ' ── Insérer un signet à la position du curseur ──
+    Dim nomSignet As String
+    nomSignet = InputBox("Nom du signet à insérer :", "Nouveau signet")
+    If nomSignet = "" Then Exit Sub
+    
+    ' Vérifier que le nom est valide (pas d'espaces, pas de caractères spéciaux)
+    nomSignet = Replace(nomSignet, " ", "_")
+    
+    ' Insérer le signet à la sélection courante
+    If doc.Bookmarks.Exists(nomSignet) Then
+        doc.Bookmarks(nomSignet).Delete
+    End If
+    doc.Bookmarks.Add Name:=nomSignet, Range:=Selection.Range
+    
+    MsgBox "Signet '" & nomSignet & "' inséré.", vbInformation
+End Sub
+
+Sub ListerSignets()
+    Dim doc As Document : Set doc = ActiveDocument
+    
+    If doc.Bookmarks.Count = 0 Then
+        MsgBox "Aucun signet dans ce document.", vbInformation : Exit Sub
+    End If
+    
+    Dim liste As String
+    Dim bm As Bookmark
+    For Each bm In doc.Bookmarks
+        liste = liste & "• " & bm.Name & " → " & Left(bm.Range.Text, 30) & "..." & vbNewLine
+    Next bm
+    MsgBox "Signets présents (" & doc.Bookmarks.Count & ") :" & vbNewLine & vbNewLine & liste
+End Sub
+
+Sub RemplirTousSignets()
+    ' Remplir tous les signets depuis un dictionnaire
+    Dim doc As Document : Set doc = ActiveDocument
+    Dim valeurs As Object : Set valeurs = CreateObject("Scripting.Dictionary")
+    
+    ' Définir les valeurs
+    valeurs("NomEntreprise")  = "ACME Corp"
+    valeurs("DateDocument")   = Format(Date, "dd/mm/yyyy")
+    valeurs("Reference")      = "REF-" & Format(Date,"YYYYMM") & "-001"
+    
+    Dim bm As Bookmark, rng As Range
+    For Each bm In doc.Bookmarks
+        If valeurs.Exists(bm.Name) Then
+            Set rng = bm.Range
+            rng.Text = valeurs(bm.Name)
+            doc.Bookmarks.Add Name:=bm.Name, Range:=rng
+        End If
+    Next bm
+    MsgBox "Signets remplis.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Quand on modifie le texte d'un signet (<code>rng.Text = ...</code>), le signet est supprimé. Il faut le recréer avec <code>doc.Bookmarks.Add Name:=bm.Name, Range:=rng</code> pour le conserver."},
+
+sig2:{t:"Mettre à jour tous les champs du document",d:"Force la mise à jour de tous les champs (dates, numéros de page, TDM, renvois) dans le document entier.",c:`Sub MettreAJourTousChamps()
+    Dim doc As Document : Set doc = ActiveDocument
+    Application.ScreenUpdating = False
+    
+    ' Mettre à jour les champs dans le corps du document
+    doc.Fields.Update
+    
+    ' Mettre à jour les champs dans les en-têtes et pieds de page
+    Dim sec As Section
+    For Each sec In doc.Sections
+        Dim hdr As HeaderFooter
+        For Each hdr In sec.Headers
+            hdr.Range.Fields.Update
+        Next hdr
+        Dim ftr As HeaderFooter
+        For Each ftr In sec.Footers
+            ftr.Range.Fields.Update
+        Next ftr
+    Next sec
+    
+    ' Mettre à jour les tables des matières
+    Dim toc As TableOfContents
+    For Each toc In doc.TablesOfContents
+        toc.Update
+    Next toc
+    
+    ' Mettre à jour les tables des illustrations
+    Dim tof As TableOfFigures
+    For Each tof In doc.TablesOfFigures
+        tof.Update
+    Next tof
+    
+    ' Mettre à jour les renvois
+    Dim fld As Field
+    For Each fld In doc.Fields
+        If fld.Type = wdFieldRef Or fld.Type = wdFieldPageRef Then
+            fld.Update
+        End If
+    Next fld
+    
+    Application.ScreenUpdating = True
+    MsgBox "Tous les champs ont été mis à jour.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Il est recommandé d'appeler cette macro avant chaque export PDF pour s'assurer que les numéros de page, la table des matières et les renvois sont à jour."},
+
+sig3:{t:"Lire et écrire les propriétés personnalisées",d:"Lit, crée ou modifie les propriétés personnalisées du document (métadonnées définies par l'utilisateur).",c:`Sub GererProprietesDuDocument()
+    Dim doc As Document : Set doc = ActiveDocument
+    
+    ' ── Lire les propriétés existantes ──
+    Dim msg As String : msg = "Propriétés personnalisées :" & vbNewLine & vbNewLine
+    Dim prop As Object
+    For Each prop In doc.CustomDocumentProperties
+        msg = msg & prop.Name & " = " & CStr(prop.Value) & vbNewLine
+    Next prop
+    If msg = "Propriétés personnalisées :" & vbNewLine & vbNewLine Then
+        msg = msg & "(Aucune propriété personnalisée)"
+    End If
+    MsgBox msg
+    
+    ' ── Ajouter ou mettre à jour des propriétés ──
+    Call SetPropriete(doc, "NomProjet",     "Projet Alpha")
+    Call SetPropriete(doc, "Confidentialite","CONFIDENTIEL")
+    Call SetPropriete(doc, "Version",        "v1.2")
+    Call SetPropriete(doc, "DerniereRevue",  Format(Date,"dd/mm/yyyy"))
+    
+    ' ── Insérer une propriété dans le texte via champ DocProperty ──
+    ' Dans Word : Insertion > QuickPart > Champ > DocProperty > NomProjet
+    
+    MsgBox "Propriétés mises à jour. Pour les afficher dans le document," & vbNewLine & _
+           "utilisez : Insertion → QuickPart → Champ → DocProperty.", vbInformation
+End Sub
+
+Sub SetPropriete(doc As Document, nomProp As String, valeurProp As String)
+    On Error Resume Next
+    ' Supprimer si existe déjà
+    doc.CustomDocumentProperties(nomProp).Delete
+    On Error GoTo 0
+    ' Créer la propriété
+    doc.CustomDocumentProperties.Add _
+        Name:=nomProp, _
+        LinkToContent:=False, _
+        Type:=msoPropertyTypeString, _
+        Value:=valeurProp
+End Sub`,tip:"<strong>Astuce :</strong> Les propriétés personnalisées sont accessibles via Fichier → Informations → Propriétés avancées → onglet Personnalisation. Elles peuvent être insérées dans le document via Insertion → QuickPart → Champ → DocProperty."},
+
+sig4:{t:"Créer des renvois automatiques entre sections",d:"Insère des champs de renvoi qui pointent automatiquement vers des titres ou signets du document.",c:`Sub CreerRenvoisAutomatiques()
+    Dim doc As Document : Set doc = ActiveDocument
+    doc.TrackRevisions = False
+    
+    ' Insérer un renvoi vers un signet
+    Sub InsererRenvoiVersSignet(nomSignet As String, typeRenvoi As Long)
+    ' typeRenvoi : wdRefTypeBookmark, wdRefTypeHeading, wdRefTypeFootnote
+    If Not doc.Bookmarks.Exists(nomSignet) Then
+        MsgBox "Signet '" & nomSignet & "' introuvable.", vbExclamation
+        Exit Sub
+    End If
+    
+    ' Insérer à la position du curseur
+    doc.Fields.Add _
+        Range:=Selection.Range, _
+        Type:=wdFieldRef, _
+        Text:=nomSignet & " \p", _  ' \p = afficher numéro de page
+        PreserveFormatting:=False
+    End Sub
+    
+    ' ── Exemple pratique : insérer un renvoi de page ──
+    Dim nomSignetCible As String
+    nomSignetCible = InputBox("Nom du signet vers lequel créer un renvoi :", "Renvoi")
+    If nomSignetCible = "" Then Exit Sub
+    
+    If Not doc.Bookmarks.Exists(nomSignetCible) Then
+        MsgBox "Signet '" & nomSignetCible & "' introuvable dans le document.", vbExclamation
+        Exit Sub
+    End If
+    
+    ' Insérer le renvoi à la sélection courante
+    doc.Fields.Add _
+        Range:=Selection.Range, _
+        Type:=wdFieldRef, _
+        Text:=nomSignetCible, _
+        PreserveFormatting:=True
+    
+    MsgBox "Renvoi vers '" & nomSignetCible & "' inséré.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Les renvois Word se mettent à jour automatiquement quand vous modifiez le document. Appelez <code>doc.Fields.Update</code> (macro précédente) avant l'impression pour les forcer à se synchroniser."},
+
+sig5:{t:"Insérer des variables de document dans le texte",d:"Crée des variables de document et les insère comme champs dans le texte pour un contenu dynamique.",c:`Sub GererVariablesDocument()
+    Dim doc As Document : Set doc = ActiveDocument
+    doc.TrackRevisions = False
+    
+    ' ── Créer des variables de document ──
+    ' Les variables sont stockées dans le document et accessibles via champ
+    doc.Variables("NomClient").Value    = InputBox("Nom du client :", , "Société ACME")
+    doc.Variables("NumeroContrat").Value = "CTR-" & Format(Date,"YYYYMM") & "-" & Int(Rnd*999+1)
+    doc.Variables("MontantHT").Value    = "15 000"
+    doc.Variables("TauxTVA").Value      = "20"
+    doc.Variables("MontantTTC").Value   = "18 000"
+    
+    ' ── Insérer un champ DocVariable dans le document ──
+    ' (Insère la valeur de la variable à la position du curseur)
+    Dim nomVar As String
+    nomVar = InputBox("Nom de la variable à insérer :" & vbNewLine & _
+                       "(NomClient, NumeroContrat, MontantHT, TauxTVA, MontantTTC)", _
+                       "Insérer variable")
+    
+    If nomVar <> "" Then
+        doc.Fields.Add _
+            Range:=Selection.Range, _
+            Type:=wdFieldDocVariable, _
+            Text:=nomVar, _
+            PreserveFormatting:=False
+    End If
+    
+    ' ── Mettre à jour toutes les variables dans le document ──
+    Dim fld As Field
+    For Each fld In doc.Fields
+        If fld.Type = wdFieldDocVariable Then
+            fld.Update
+        End If
+    Next fld
+    
+    MsgBox "Variables créées et champs mis à jour." & vbNewLine & vbNewLine & _
+           "Variables disponibles :" & vbNewLine & _
+           "• NomClient" & vbNewLine & _
+           "• NumeroContrat" & vbNewLine & _
+           "• MontantHT / TauxTVA / MontantTTC", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Les variables de document (<code>doc.Variables</code>) sont idéales pour stocker des valeurs globales à un document. Elles persistent dans le fichier .docm et peuvent être insérées n'importe où via le champ <code>DOCVARIABLE</code>."},
+
+// ── SÉCURITÉ ──
+sec1:{t:"Protéger un document par zone ou lecture seule",d:"Applique différents niveaux de protection sur le document : lecture seule, commentaires uniquement, ou formulaires.",c:`Sub ProtegerDocument()
+    Dim doc As Document : Set doc = ActiveDocument
+    
+    Dim choix As Integer
+    choix = MsgBox("Choisir le type de protection :" & vbNewLine & vbNewLine & _
+                   "OUI = Lecture seule" & vbNewLine & _
+                   "NON = Commentaires uniquement" & vbNewLine & _
+                   "ANNULER = Formulaires uniquement", _
+                   vbYesNoCancel + vbQuestion, "Protection")
+    
+    If choix = vbCancel Then
+        ' Vérifier s'il s'agit d'annuler ou de choisir formulaires
+        Dim choix2 As Integer
+        choix2 = MsgBox("Protéger pour formulaires uniquement ?", vbYesNo + vbQuestion)
+        If choix2 = vbNo Then Exit Sub
+    End If
+    
+    Dim mdp As String
+    mdp = InputBox("Mot de passe (laisser vide pour protection sans MDP) :", "Mot de passe")
+    
+    ' Déprotéger d'abord si déjà protégé
+    If doc.ProtectionType <> wdNoProtection Then
+        On Error Resume Next
+        doc.Unprotect Password:=mdp
+        On Error GoTo 0
+    End If
+    
+    Select Case choix
+        Case vbYes
+            ' Lecture seule
+            If mdp <> "" Then doc.Protect wdAllowOnlyReading, Password:=mdp _
+            Else doc.Protect wdAllowOnlyReading
+        Case vbNo
+            ' Commentaires seulement
+            If mdp <> "" Then doc.Protect wdAllowOnlyComments, Password:=mdp _
+            Else doc.Protect wdAllowOnlyComments
+        Case vbCancel
+            ' Formulaires seulement
+            If mdp <> "" Then doc.Protect wdAllowOnlyFormFields, Password:=mdp _
+            Else doc.Protect wdAllowOnlyFormFields
+    End Select
+    
+    MsgBox "Document protégé.", vbInformation
+End Sub
+
+Sub DeprotegerDocument()
+    Dim doc As Document : Set doc = ActiveDocument
+    If doc.ProtectionType = wdNoProtection Then
+        MsgBox "Ce document n'est pas protégé.", vbInformation : Exit Sub
+    End If
+    Dim mdp As String : mdp = InputBox("Mot de passe :", "Déprotéger")
+    On Error Resume Next
+    doc.Unprotect Password:=mdp
+    If Err.Number <> 0 Then
+        MsgBox "Mot de passe incorrect.", vbExclamation : Err.Clear
+    Else
+        MsgBox "Document déprotégé.", vbInformation
+    End If
+    On Error GoTo 0
+End Sub`,tip:"<strong>Astuce :</strong> Pour protéger uniquement certaines sections, utilisez la protection par sections : sélectionnez les zones modifiables → Format → Sections → décochez 'Protégé' pour ces sections avant d'activer la protection globale."},
+
+sec2:{t:"Supprimer les métadonnées et infos personnelles",d:"Efface les métadonnées sensibles (auteur, commentaires supprimés, versions) avant le partage du document.",c:`Sub SupprimerMetadonnees()
+    Dim doc As Document : Set doc = ActiveDocument
+    
+    Dim rep As VbMsgBoxResult
+    rep = MsgBox("Supprimer les métadonnées personnelles de ce document ?" & vbNewLine & vbNewLine & _
+                 "Cela supprimera : l'historique des auteurs, les informations personnelles," & vbNewLine & _
+                 "les commentaires supprimés et les données cachées.", _
+                 vbYesNo + vbExclamation, "Nettoyage métadonnées")
+    If rep = vbNo Then Exit Sub
+    
+    Application.ScreenUpdating = False
+    
+    ' Supprimer les informations personnelles
+    doc.RemovePersonalInformation = True
+    
+    ' Réinitialiser les propriétés d'auteur
+    On Error Resume Next
+    doc.BuiltInDocumentProperties("Author").Value = ""
+    doc.BuiltInDocumentProperties("Last Author").Value = ""
+    doc.BuiltInDocumentProperties("Company").Value = ""
+    On Error GoTo 0
+    
+    ' Supprimer tous les commentaires
+    If doc.Comments.Count > 0 Then doc.DeleteAllComments
+    
+    ' Accepter les révisions (supprimer l'historique)
+    If doc.Revisions.Count > 0 Then doc.Revisions.AcceptAll
+    doc.TrackRevisions = False
+    
+    ' Supprimer les versions sauvegardées
+    If doc.Versions.Count > 0 Then
+        Dim v As Version
+        For Each v In doc.Versions
+            v.Delete
+        Next v
+    End If
+    
+    ' Supprimer les données XML personnalisées
+    On Error Resume Next
+    Dim cxp As CustomXMLPart
+    For Each cxp In doc.CustomXMLParts
+        If Not cxp.BuiltIn Then cxp.Delete
+    Next cxp
+    On Error GoTo 0
+    
+    Application.ScreenUpdating = True
+    MsgBox "Métadonnées supprimées. Sauvegardez le document pour finaliser.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> <code>doc.RemovePersonalInformation = True</code> supprime automatiquement les infos personnelles lors de la prochaine sauvegarde. C'est un paramètre qui persiste dans le document."},
+
+sec3:{t:"Vérifier la présence de clauses obligatoires",d:"Contrôle que le document contient toutes les clauses légales requises et génère un rapport de conformité.",c:`Sub VerifierConformite()
+    Dim doc As Document : Set doc = ActiveDocument
+    
+    ' Définir les clauses obligatoires
+    Dim clauses(7) As String
+    clauses(0) = "article 1"
+    clauses(1) = "objet du contrat"
+    clauses(2) = "durée"
+    clauses(3) = "prix"
+    clauses(4) = "paiement"
+    clauses(5) = "résiliation"
+    clauses(6) = "litiges"
+    clauses(7) = "signature"
+    
+    Application.ScreenUpdating = False
+    
+    Dim presentes() As String, absentes() As String
+    Dim nbP As Integer, nbA As Integer
+    ReDim presentes(UBound(clauses)) : ReDim absentes(UBound(clauses))
+    
+    Dim i As Integer
+    For i = 0 To UBound(clauses)
+        Dim trouve As Boolean : trouve = False
+        With doc.Content.Find
+            .ClearFormatting
+            .Text = clauses(i)
+            .Forward = True : .Wrap = wdFindStop
+            .MatchCase = False : .MatchWholeWord = False
+            trouve = .Execute
+        End With
+        If trouve Then
+            presentes(nbP) = clauses(i) : nbP = nbP + 1
+        Else
+            absentes(nbA) = clauses(i) : nbA = nbA + 1
+        End If
+    Next i
+    
+    Application.ScreenUpdating = True
+    
+    Dim rapport As String
+    rapport = "RAPPORT DE CONFORMITÉ" & vbNewLine & String(40,"─") & vbNewLine & vbNewLine
+    rapport = rapport & "✓ Clauses présentes (" & nbP & ") :" & vbNewLine
+    For i = 0 To nbP - 1
+        rapport = rapport & "   • " & presentes(i) & vbNewLine
+    Next i
+    rapport = rapport & vbNewLine
+    If nbA > 0 Then
+        rapport = rapport & "⚠ Clauses manquantes (" & nbA & ") :" & vbNewLine
+        For i = 0 To nbA - 1
+            rapport = rapport & "   • " & absentes(i) & vbNewLine
+        Next i
+    Else
+        rapport = rapport & "✓ Toutes les clauses sont présentes."
+    End If
+    
+    MsgBox rapport, IIf(nbA>0, vbExclamation, vbInformation), "Conformité"
+End Sub`,tip:"<strong>Astuce :</strong> Adaptez le tableau <code>clauses()</code> à votre type de document (CGV, marchés publics, RGPD...). La recherche est insensible à la casse pour plus de souplesse."},
+
+sec4:{t:"Journaliser les modifications avec horodatage",d:"Enregistre automatiquement chaque ouverture et fermeture du document avec l'identité de l'utilisateur.",c:`' ═══════════════════════════════════════════════════
+' Placez ce code dans le module ThisDocument
+' (Double-clic sur ThisDocument dans l'explorateur VBA)
+' ═══════════════════════════════════════════════════
+
+Private Sub Document_Open()
+    Call AjouterEntreeJournal("Ouverture")
+End Sub
+
+Private Sub Document_Close()
+    Call AjouterEntreeJournal("Fermeture")
+End Sub
+
+Private Sub Document_BeforeSave(ByVal SaveAsUI As Boolean, Cancel As Boolean)
+    Call AjouterEntreeJournal("Sauvegarde")
+End Sub
+
+Sub AjouterEntreeJournal(action As String)
+    Dim cheminJournal As String
+    cheminJournal = ThisDocument.Path & "\Journal_" & _
+                    Left(ThisDocument.Name, Len(ThisDocument.Name)-5) & ".txt"
+    
+    If ThisDocument.Path = "" Then Exit Sub ' Document non sauvegardé
+    
+    On Error GoTo FinJournal
+    Dim fileNum As Integer : fileNum = FreeFile
+    Open cheminJournal For Append As #fileNum
+    
+    Print #fileNum, Format(Now,"yyyy-mm-dd hh:mm:ss") & " | " & _
+                    Environ("USERNAME") & " | " & _
+                    action & " | " & _
+                    ThisDocument.Name
+    
+    Close #fileNum
+    FinJournal:
+    If Err.Number <> 0 Then Err.Clear
+End Sub
+
+' ── Pour consulter le journal ──
+Sub OuvrirJournal()
+    Dim chemin As String
+    chemin = ThisDocument.Path & "\Journal_" & _
+             Left(ThisDocument.Name, Len(ThisDocument.Name)-5) & ".txt"
+    If Dir(chemin) <> "" Then
+        Shell "notepad.exe """ & chemin & """", vbNormalFocus
+    Else
+        MsgBox "Aucun journal trouvé.", vbInformation
+    End If
+End Sub`,tip:"<strong>Astuce :</strong> Le journal est un fichier .txt externe au document pour être accessible même si le document est verrouillé. Il est créé dans le même dossier que le document avec le préfixe 'Journal_'."},
+
+sec5:{t:"Sauvegarde horodatée automatique",d:"Crée une copie de sauvegarde horodatée du document à chaque ouverture, avec conservation des 10 dernières.",c:`' ═══════════════════════════════════════════════════
+' Placez dans le module ThisDocument
+' ═══════════════════════════════════════════════════
+Private Sub Document_Open()
+    Call CreerSauvegardeWord
+End Sub
+
+Sub CreerSauvegardeWord()
+    Dim doc As Document : Set doc = ActiveDocument
+    If doc.Path = "" Then Exit Sub ' Pas encore sauvegardé
+    
+    Dim dossierSav As String
+    dossierSav = doc.Path & "\Sauvegardes\"
+    If Dir(dossierSav, vbDirectory) = "" Then MkDir dossierSav
+    
+    Dim nomBase As String : nomBase = Left(doc.Name, Len(doc.Name)-5)
+    Dim nomSav As String : nomSav = nomBase & "_" & Format(Now,"YYYY-MM-DD_HH-MM") & ".docx"
+    Dim cheminSav As String : cheminSav = dossierSav & nomSav
+    
+    On Error GoTo ErrSauvegarde
+    doc.SaveCopyAs Filename:=cheminSav
+    
+    ' Purger les anciennes sauvegardes (garder 10 max)
+    Const MAX As Integer = 10
+    Dim fichiers() As String, nb As Integer, f As String
+    f = Dir(dossierSav & nomBase & "*.docx")
+    Do While f <> ""
+        nb = nb + 1 : ReDim Preserve fichiers(nb-1) : fichiers(nb-1) = f : f = Dir()
+    Loop
+    If nb > MAX Then
+        Dim i As Integer
+        For i = 0 To nb-MAX-1 : Kill dossierSav & fichiers(i) : Next i
+    End If
+    Exit Sub
+    
+ErrSauvegarde:
+    ' Ne pas bloquer l'utilisateur
+    Err.Clear
+End Sub`,tip:"<strong>Astuce :</strong> <code>doc.SaveCopyAs</code> crée une copie sans changer le fichier en cours de travail. Le dossier 'Sauvegardes' est créé automatiquement à côté du document original."}
+};
+
+function openModal(id){
+  const d=M[id];if(!d)return;
+  document.getElementById('modalTitle').textContent=d.t;
+  document.getElementById('modalDesc').textContent=d.d;
+  document.getElementById('modalCode').textContent=d.c;
+  document.getElementById('modalTip').innerHTML=d.tip;
+  document.getElementById('copyBtn').textContent='Copier';
+  document.getElementById('copyBtn').className='copy-btn';
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){document.getElementById('modalOverlay').classList.remove('open');document.body.style.overflow='';}
+function closeOut(e){if(e.target===document.getElementById('modalOverlay'))closeModal();}
+function copyCode(){
+  navigator.clipboard.writeText(document.getElementById('modalCode').textContent).then(()=>{
+    const b=document.getElementById('copyBtn');
+    b.textContent='✓ Copié !';b.className='copy-btn copied';
+    setTimeout(()=>{b.textContent='Copier';b.className='copy-btn';},2000);
+  });
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+</script>
+</body>
+</html>
